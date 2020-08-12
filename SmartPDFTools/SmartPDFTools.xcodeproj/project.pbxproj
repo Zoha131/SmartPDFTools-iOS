@@ -56,15 +56,39 @@
 		897DA36A24E2B5A800D998CE /* SmartPDFTools */ = {
 			isa = PBXGroup;
 			children = (
+				8999F84E24E3FA3900DCD77C /* Resource */,
+				8999F84D24E3F9E100DCD77C /* UI */,
 				897DA36B24E2B5A800D998CE /* AppDelegate.swift */,
-				897DA36D24E2B5A800D998CE /* SceneDelegate.swift */,
-				897DA36F24E2B5A800D998CE /* ViewController.swift */,
-				897DA37124E2B5A800D998CE /* Main.storyboard */,
-				897DA37424E2B5A900D998CE /* Assets.xcassets */,
-				897DA37624E2B5A900D998CE /* LaunchScreen.storyboard */,
 				897DA37924E2B5A900D998CE /* Info.plist */,
 			);
 			path = SmartPDFTools;
+			sourceTree = "<group>";
+		};
+		8999F84D24E3F9E100DCD77C /* UI */ = {
+			isa = PBXGroup;
+			children = (
+				8999F85124E3FB0C00DCD77C /* View */,
+				897DA37124E2B5A800D998CE /* Main.storyboard */,
+				897DA37624E2B5A900D998CE /* LaunchScreen.storyboard */,
+				897DA36D24E2B5A800D998CE /* SceneDelegate.swift */,
+				897DA36F24E2B5A800D998CE /* ViewController.swift */,
+			);
+			path = UI;
+			sourceTree = "<group>";
+		};
+		8999F84E24E3FA3900DCD77C /* Resource */ = {
+			isa = PBXGroup;
+			children = (
+				897DA37424E2B5A900D998CE /* Assets.xcassets */,
+			);
+			path = Resource;
+			sourceTree = "<group>";
+		};
+		8999F85124E3FB0C00DCD77C /* View */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = View;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
