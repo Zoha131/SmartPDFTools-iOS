@@ -14,7 +14,6 @@ class PDFToolCell: UICollectionViewCell {
   private let imageView = UIImageView()
   private let titleView = UILabel()
 
-  #warning("Create a protocol to extract this behavior")
   var tool: Tool? {
     didSet {
       if let tool = tool {
@@ -28,39 +27,35 @@ class PDFToolCell: UICollectionViewCell {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    setupShadow()
-    setupViews()
+    configureViews()
   }
 
   required init?(coder: NSCoder) {
     fatalError("Storyboard Not Supported")
   }
 
-  func setupShadow() {
-    backgroundView = UIView()
-    backgroundView?.layer.cornerRadius = contentView.frame.height / 2
-  }
-
-  func setupViews() {
+  func configureViews() {
     imageView.translatesAutoresizingMaskIntoConstraints = false
     titleView.translatesAutoresizingMaskIntoConstraints = false
 
-    titleView.setupToolLabel()
+    titleView.configureToolLabel()
     titleView.textAlignment = .left
 
     contentView.addSubview(imageView)
     contentView.addSubview(titleView)
 
     NSLayoutConstraint.activate([
-      imageView.heightAnchor.constraint(equalToConstant: 19),
-      imageView.widthAnchor.constraint(equalToConstant: 19),
-      imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 15),
+      imageView.heightAnchor.constraint(equalToConstant: .pdfToolSize),
+      imageView.widthAnchor.constraint(equalToConstant: .pdfToolSize),
+      imageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .paddingNormal),
       imageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
 
-      titleView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: 10),
-      titleView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -10),
+      titleView.leadingAnchor.constraint(equalTo: imageView.trailingAnchor, constant: .paddingSmall),
+      titleView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.paddingSmall),
       titleView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor)
     ])
+
+    backgroundView = UIView()
+    backgroundView?.layer.cornerRadius = contentView.frame.height / 2
   }
 }
-

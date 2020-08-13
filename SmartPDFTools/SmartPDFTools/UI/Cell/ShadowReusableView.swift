@@ -14,32 +14,25 @@ class ShadowReusableView: UICollectionReusableView {
   override init(frame: CGRect) {
     super.init(frame: frame)
 
-    setupShadow()
-
+    configureViews()
   }
 
   required init?(coder: NSCoder) {
     fatalError("Storyboard Not Supported")
   }
 
-  func setupShadow() {
+  func configureViews() {
     let shadowView = UIView()
     shadowView.translatesAutoresizingMaskIntoConstraints = false
-
-    shadowView.backgroundColor = .tertiarySystemBackground
-    shadowView.layer.cornerRadius = 10
-    shadowView.layer.shadowColor = UIColor.black.cgColor
-    shadowView.layer.shadowRadius = 5
-    shadowView.layer.shadowOpacity = 0.1
-    shadowView.layer.shadowOffset = CGSize(width: 0, height: 5)
+    shadowView.applyCardShadow()
 
     addSubview(shadowView)
 
     NSLayoutConstraint.activate([
-      shadowView.topAnchor.constraint(equalTo: self.topAnchor, constant: 0),
-      shadowView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10),
-      shadowView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10),
-      shadowView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10)
+      shadowView.topAnchor.constraint(equalTo: self.topAnchor),
+      shadowView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -.paddingSmall),
+      shadowView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: .paddingSmall),
+      shadowView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -.paddingSmall)
     ])
   }
 }

@@ -9,6 +9,7 @@
 import UIKit
 
 extension UIImage {
+  // swiftlint:disable force_unwrapping
   static let bmpTopdf = UIImage(named: "BMP to PDF")!
   static let bmpTotxt = UIImage(named: "BMP to TXT")!
   static let compresspdf = UIImage(named: "Compress PDF")!
@@ -35,8 +36,9 @@ extension UIImage {
   static let rotatepdf = UIImage(named: "Rotate PDF")!
   static let splitpdf = UIImage(named: "Split PDF")!
   static let tiffTopdf = UIImage(named: "TIFF to PDF")!
-  static let tiffTotxt = UIImage(named: "TIFF to TXt")!
+  static let tiffTotxt = UIImage(named: "TIFF to TXT")!
   static let txtTopdf = UIImage(named: "TXT to PDF")!
   static let watermarkpdf = UIImage(named: "Watermark PDF")!
   static let wordTopdf = UIImage(named: "Word to PDF")!
+  // swiftlint:enable force_unwrapping
 }

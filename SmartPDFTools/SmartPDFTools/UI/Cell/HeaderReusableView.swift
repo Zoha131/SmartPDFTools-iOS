@@ -15,16 +15,14 @@ class HeaderReusableView: UICollectionReusableView {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    configure()
+    configureViews()
   }
 
   required init?(coder: NSCoder) {
-    fatalError()
+    fatalError("Storyaboard is not supported")
   }
-}
 
-extension HeaderReusableView {
-  func configure() {
+  func configureViews() {
     backgroundColor = .clear
     label.textAlignment = .center
 
@@ -32,14 +30,12 @@ extension HeaderReusableView {
     label.translatesAutoresizingMaskIntoConstraints = false
     label.adjustsFontForContentSizeCategory = true
 
-    let inset = CGFloat(20)
     NSLayoutConstraint.activate([
-      label.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 0),
-      label.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0),
-      label.topAnchor.constraint(equalTo: topAnchor, constant: inset),
-      label.bottomAnchor.constraint(equalTo: bottomAnchor, constant: 0)
+      label.leadingAnchor.constraint(equalTo: leadingAnchor),
+      label.trailingAnchor.constraint(equalTo: trailingAnchor),
+      label.topAnchor.constraint(equalTo: topAnchor, constant: .paddingMedium),
+      label.bottomAnchor.constraint(equalTo: bottomAnchor)
     ])
     label.font = UIFont.preferredFont(forTextStyle: .title3)
   }
 }
-

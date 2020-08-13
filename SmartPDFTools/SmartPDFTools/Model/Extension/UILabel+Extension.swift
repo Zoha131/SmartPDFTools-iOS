@@ -11,7 +11,7 @@ import Foundation
 import UIKit
 
 extension UILabel {
-  func setupLabel(
+  func configureLabel(
     withTextStyle style: UIFont.TextStyle,
     textColor: UIColor,
     numberOfLines: Int,
@@ -25,9 +25,14 @@ extension UILabel {
 
     self.textColor = textColor
     self.numberOfLines = numberOfLines
+    self.textAlignment = .center
   }
 
-  func setupToolLabel() {
-    setupLabel(withTextStyle: .body, textColor: .label, numberOfLines: 1, scalFactor: 0.5)
+  func configureToolLabel() {
+    configureLabel(withTextStyle: .footnote, textColor: .label, numberOfLines: 1, scalFactor: 0.5)
+  }
+
+  func configureMegaToolLabel() {
+    configureLabel(withTextStyle: .subheadline, textColor: .label, numberOfLines: 1, scalFactor: 0.5)
   }
 }

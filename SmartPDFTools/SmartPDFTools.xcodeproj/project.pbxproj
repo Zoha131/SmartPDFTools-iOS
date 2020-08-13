@@ -7,19 +7,47 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8921615124E4E765000AE622 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8921615024E4E765000AE622 /* UILabel+Extension.swift */; };
+		8921615324E4F052000AE622 /* PDFToolCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8921615224E4F052000AE622 /* PDFToolCell.swift */; };
+		8921615524E4F683000AE622 /* MegaToolCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8921615424E4F683000AE622 /* MegaToolCell.swift */; };
+		8921615824E4FF8A000AE622 /* MegaToolTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8921615724E4FF8A000AE622 /* MegaToolTitleView.swift */; };
+		8921615A24E51AEA000AE622 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8921615924E51AEA000AE622 /* UIView+Extension.swift */; };
+		8921615E24E55FA1000AE622 /* SizeConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8921615D24E55FA1000AE622 /* SizeConstant.swift */; };
+		8978A60724E42C030006246C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8978A60624E42C030006246C /* HomeViewController.swift */; };
+		8978A60A24E43E170006246C /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8978A60924E43E170006246C /* Tool.swift */; };
+		8978A60C24E43ED60006246C /* ToolSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8978A60B24E43ED60006246C /* ToolSection.swift */; };
+		8978A60E24E4443A0006246C /* ConverterToolCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8978A60D24E4443A0006246C /* ConverterToolCell.swift */; };
+		8978A61024E449F30006246C /* HeaderReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8978A60F24E449F30006246C /* HeaderReusableView.swift */; };
+		8978A61224E44EE80006246C /* ShadowReusableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8978A61124E44EE80006246C /* ShadowReusableView.swift */; };
+		8978A61524E470F60006246C /* UIImage+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8978A61424E470F60006246C /* UIImage+Extension.swift */; };
+		8978A61724E4711E0006246C /* UIColor+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8978A61624E4711E0006246C /* UIColor+Extension.swift */; };
+		8978A61924E471310006246C /* String+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8978A61824E471310006246C /* String+Extension.swift */; };
 		897DA36C24E2B5A800D998CE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897DA36B24E2B5A800D998CE /* AppDelegate.swift */; };
 		897DA36E24E2B5A800D998CE /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897DA36D24E2B5A800D998CE /* SceneDelegate.swift */; };
-		897DA37024E2B5A800D998CE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 897DA36F24E2B5A800D998CE /* ViewController.swift */; };
 		897DA37324E2B5A800D998CE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 897DA37124E2B5A800D998CE /* Main.storyboard */; };
 		897DA37524E2B5A900D998CE /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 897DA37424E2B5A900D998CE /* Assets.xcassets */; };
 		897DA37824E2B5A900D998CE /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 897DA37624E2B5A900D998CE /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8921615024E4E765000AE622 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
+		8921615224E4F052000AE622 /* PDFToolCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PDFToolCell.swift; sourceTree = "<group>"; };
+		8921615424E4F683000AE622 /* MegaToolCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaToolCell.swift; sourceTree = "<group>"; };
+		8921615724E4FF8A000AE622 /* MegaToolTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaToolTitleView.swift; sourceTree = "<group>"; };
+		8921615924E51AEA000AE622 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
+		8921615D24E55FA1000AE622 /* SizeConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeConstant.swift; sourceTree = "<group>"; };
+		8978A60624E42C030006246C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
+		8978A60924E43E170006246C /* Tool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
+		8978A60B24E43ED60006246C /* ToolSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSection.swift; sourceTree = "<group>"; };
+		8978A60D24E4443A0006246C /* ConverterToolCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConverterToolCell.swift; sourceTree = "<group>"; };
+		8978A60F24E449F30006246C /* HeaderReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HeaderReusableView.swift; sourceTree = "<group>"; };
+		8978A61124E44EE80006246C /* ShadowReusableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShadowReusableView.swift; sourceTree = "<group>"; };
+		8978A61424E470F60006246C /* UIImage+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage+Extension.swift"; sourceTree = "<group>"; };
+		8978A61624E4711E0006246C /* UIColor+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+Extension.swift"; sourceTree = "<group>"; };
+		8978A61824E471310006246C /* String+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Extension.swift"; sourceTree = "<group>"; };
 		897DA36824E2B5A800D998CE /* SmartPDFTools.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SmartPDFTools.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		897DA36B24E2B5A800D998CE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		897DA36D24E2B5A800D998CE /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		897DA36F24E2B5A800D998CE /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		897DA37224E2B5A800D998CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		897DA37424E2B5A900D998CE /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		897DA37724E2B5A900D998CE /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
@@ -37,6 +65,45 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		8921615624E4FF72000AE622 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				8921615724E4FF8A000AE622 /* MegaToolTitleView.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		8978A60324E429F30006246C /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				8978A60624E42C030006246C /* HomeViewController.swift */,
+			);
+			path = Controller;
+			sourceTree = "<group>";
+		};
+		8978A60824E43E080006246C /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				8978A61324E470BF0006246C /* Extension */,
+				8978A60924E43E170006246C /* Tool.swift */,
+				8978A60B24E43ED60006246C /* ToolSection.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		8978A61324E470BF0006246C /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				8978A61424E470F60006246C /* UIImage+Extension.swift */,
+				8978A61624E4711E0006246C /* UIColor+Extension.swift */,
+				8978A61824E471310006246C /* String+Extension.swift */,
+				8921615024E4E765000AE622 /* UILabel+Extension.swift */,
+				8921615924E51AEA000AE622 /* UIView+Extension.swift */,
+				8921615D24E55FA1000AE622 /* SizeConstant.swift */,
+			);
+			path = Extension;
+			sourceTree = "<group>";
+		};
 		897DA35F24E2B5A800D998CE = {
 			isa = PBXGroup;
 			children = (
@@ -56,6 +123,7 @@
 		897DA36A24E2B5A800D998CE /* SmartPDFTools */ = {
 			isa = PBXGroup;
 			children = (
+				8978A60824E43E080006246C /* Model */,
 				8999F84E24E3FA3900DCD77C /* Resource */,
 				8999F84D24E3F9E100DCD77C /* UI */,
 				897DA36B24E2B5A800D998CE /* AppDelegate.swift */,
@@ -67,11 +135,12 @@
 		8999F84D24E3F9E100DCD77C /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				8999F85124E3FB0C00DCD77C /* View */,
+				8921615624E4FF72000AE622 /* View */,
+				8978A60324E429F30006246C /* Controller */,
+				8999F85124E3FB0C00DCD77C /* Cell */,
 				897DA37124E2B5A800D998CE /* Main.storyboard */,
 				897DA37624E2B5A900D998CE /* LaunchScreen.storyboard */,
 				897DA36D24E2B5A800D998CE /* SceneDelegate.swift */,
-				897DA36F24E2B5A800D998CE /* ViewController.swift */,
 			);
 			path = UI;
 			sourceTree = "<group>";
@@ -84,11 +153,16 @@
 			path = Resource;
 			sourceTree = "<group>";
 		};
-		8999F85124E3FB0C00DCD77C /* View */ = {
+		8999F85124E3FB0C00DCD77C /* Cell */ = {
 			isa = PBXGroup;
 			children = (
+				8978A60D24E4443A0006246C /* ConverterToolCell.swift */,
+				8978A60F24E449F30006246C /* HeaderReusableView.swift */,
+				8978A61124E44EE80006246C /* ShadowReusableView.swift */,
+				8921615224E4F052000AE622 /* PDFToolCell.swift */,
+				8921615424E4F683000AE622 /* MegaToolCell.swift */,
 			);
-			path = View;
+			path = Cell;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -101,6 +175,7 @@
 				897DA36424E2B5A800D998CE /* Sources */,
 				897DA36524E2B5A800D998CE /* Frameworks */,
 				897DA36624E2B5A800D998CE /* Resources */,
+				8999F85224E41BC200DCD77C /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -157,14 +232,48 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		8999F85224E41BC200DCD77C /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# Type a script or drag a script file from your workspace to insert its path.\nif [ -f ~/com.raywenderlich.swiftlint.yml ]; then\n  if which swiftlint >/dev/null; then\n    swiftlint --config ~/com.raywenderlich.swiftlint.yml\n  fi\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		897DA36424E2B5A800D998CE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				897DA37024E2B5A800D998CE /* ViewController.swift in Sources */,
 				897DA36C24E2B5A800D998CE /* AppDelegate.swift in Sources */,
+				8978A61924E471310006246C /* String+Extension.swift in Sources */,
+				8921615A24E51AEA000AE622 /* UIView+Extension.swift in Sources */,
 				897DA36E24E2B5A800D998CE /* SceneDelegate.swift in Sources */,
+				8921615E24E55FA1000AE622 /* SizeConstant.swift in Sources */,
+				8978A60E24E4443A0006246C /* ConverterToolCell.swift in Sources */,
+				8978A61524E470F60006246C /* UIImage+Extension.swift in Sources */,
+				8978A61024E449F30006246C /* HeaderReusableView.swift in Sources */,
+				8921615824E4FF8A000AE622 /* MegaToolTitleView.swift in Sources */,
+				8978A60724E42C030006246C /* HomeViewController.swift in Sources */,
+				8921615524E4F683000AE622 /* MegaToolCell.swift in Sources */,
+				8978A60C24E43ED60006246C /* ToolSection.swift in Sources */,
+				8921615124E4E765000AE622 /* UILabel+Extension.swift in Sources */,
+				8978A60A24E43E170006246C /* Tool.swift in Sources */,
+				8921615324E4F052000AE622 /* PDFToolCell.swift in Sources */,
+				8978A61224E44EE80006246C /* ShadowReusableView.swift in Sources */,
+				8978A61724E4711E0006246C /* UIColor+Extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

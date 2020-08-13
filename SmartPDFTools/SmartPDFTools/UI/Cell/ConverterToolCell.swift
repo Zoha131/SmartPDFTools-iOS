@@ -11,8 +11,8 @@ import UIKit
 class ConverterToolCell: UICollectionViewCell {
   static let reuseIdentifier = String(describing: UICollectionViewCell.self)
 
-  private let imageView = UIImageView()
-  private let titleView = UILabel()
+  let imageView = UIImageView()
+  let titleView = UILabel()
 
   var tool: Tool? {
     didSet {
@@ -26,44 +26,35 @@ class ConverterToolCell: UICollectionViewCell {
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    setupShadow()
-    setupViews()
+    configureViews()
   }
 
   required init?(coder: NSCoder) {
     fatalError("Storyboard Not Supported")
   }
 
-  func setupShadow() {
-    backgroundView = UIView()
-    backgroundView?.backgroundColor = .secondarySystemBackground
-    backgroundView?.layer.cornerRadius = 10
-    backgroundView?.layer.shadowColor = UIColor.black.cgColor
-    backgroundView?.layer.shadowRadius = 3
-    backgroundView?.layer.shadowOpacity = 0.1
-    backgroundView?.layer.shadowOffset = CGSize(width: 0, height: 3)
-  }
-
-  func setupViews() {
+  func configureViews() {
     imageView.translatesAutoresizingMaskIntoConstraints = false
     titleView.translatesAutoresizingMaskIntoConstraints = false
 
-    titleView.setupToolLabel()
-    titleView.textAlignment = .center
+    titleView.configureToolLabel()
 
     contentView.addSubview(imageView)
     contentView.addSubview(titleView)
 
     NSLayoutConstraint.activate([
-      imageView.heightAnchor.constraint(equalToConstant: 35),
-      imageView.widthAnchor.constraint(equalToConstant: 35),
-      imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 20),
+      imageView.heightAnchor.constraint(equalToConstant: .toolSize),
+      imageView.widthAnchor.constraint(equalToConstant: .toolSize),
+      imageView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: .paddingNormal),
       imageView.centerXAnchor.constraint(equalTo: contentView.centerXAnchor),
 
-      titleView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 5),
-      titleView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -5),
-      titleView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: 10),
-      titleView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -20),
+      titleView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: .paddingTiny),
+      titleView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -.paddingTiny),
+      titleView.topAnchor.constraint(equalTo: imageView.bottomAnchor, constant: .paddingNormal),
+      titleView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -.paddingSmall)
     ])
+
+    backgroundView = UIView()
+    backgroundView?.applyToolShadow()
   }
 }

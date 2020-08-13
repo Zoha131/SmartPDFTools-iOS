@@ -35,7 +35,7 @@ extension String {
   static let rotatepdf = "Rotate PDF"
   static let splitpdf = "Split PDF"
   static let tiffTopdf = "TIFF to PDF"
-  static let tiffTotxt = "TIFF to TXt"
+  static let tiffTotxt = "TIFF to TXT"
   static let txtTopdf = "TXT to PDF"
   static let watermarkpdf = "Watermark PDF"
   static let wordTopdf = "Word to PDF"
