@@ -19,6 +19,9 @@ class SelectionViewController: UIViewController {
   let borderLayer: CAShapeLayer = .createBorderLayer()
   var dataSource: UICollectionViewDiffableDataSource<ToolSection, Tool>?
 
+  // TODO: There might be a better way to load views
+  let selectionView = UploadView.fromNib()
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -31,6 +34,20 @@ class SelectionViewController: UIViewController {
 
     dataSource = collectionView.configureMoreToolCollectionView()
     sponsoreView.updateVisibility()
+
+    loadViews()
+  }
+
+  func loadViews() {
+    selectionView.translatesAutoresizingMaskIntoConstraints = false
+    chooserCardView.addSubview(selectionView)
+
+    NSLayoutConstraint.activate([
+      selectionView.topAnchor.constraint(equalTo: chooserCardView.topAnchor),
+      selectionView.bottomAnchor.constraint(equalTo: chooserCardView.bottomAnchor),
+      selectionView.trailingAnchor.constraint(equalTo: chooserCardView.trailingAnchor),
+      selectionView.leadingAnchor.constraint(equalTo: chooserCardView.leadingAnchor)
+    ])
   }
 
   override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
