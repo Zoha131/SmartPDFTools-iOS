@@ -7,13 +7,14 @@
 //
 
 import UIKit
+import Lottie
 
 class ProgressView: UIView {
   @IBOutlet weak var button: UIButton!
   @IBOutlet weak var progressBar: UIProgressView!
   @IBOutlet weak var progressTxt: UILabel!
   @IBOutlet weak var titleView: UILabel!
-  @IBOutlet weak var animationView: UIView!
+  @IBOutlet weak var animationView: AnimationView!
 
   var onCancelAction: (() -> Void)?
 
@@ -33,6 +34,8 @@ class ProgressView: UIView {
   private func configureViews() {
     applyRadius()
     button.applyButtonTransparent(withBackgroundColor: .pdfTops)
+    animationView.loopMode = .loop
+    animationView.play()
   }
 
   @IBAction func cancelAction(_ sender: Any) {

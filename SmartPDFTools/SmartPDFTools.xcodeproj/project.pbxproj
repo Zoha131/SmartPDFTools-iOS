@@ -44,6 +44,7 @@
 		89B3D38E24E7E51F003B8898 /* UploadView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 89B3D38D24E7E51F003B8898 /* UploadView.xib */; };
 		89B3D39024E7E52E003B8898 /* UploadView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B3D38F24E7E52E003B8898 /* UploadView.swift */; };
 		89B3D39224E7FC2F003B8898 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89B3D39124E7FC2F003B8898 /* UIButton+Extension.swift */; };
+		89B3D39424E831F4003B8898 /* delivery-service.json in Resources */ = {isa = PBXBuildFile; fileRef = 89B3D39324E831F4003B8898 /* delivery-service.json */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +89,7 @@
 		89B3D38D24E7E51F003B8898 /* UploadView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UploadView.xib; sourceTree = "<group>"; };
 		89B3D38F24E7E52E003B8898 /* UploadView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UploadView.swift; sourceTree = "<group>"; };
 		89B3D39124E7FC2F003B8898 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		89B3D39324E831F4003B8898 /* delivery-service.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "delivery-service.json"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -116,7 +118,6 @@
 				0D80ABEAF46F7F183E956689 /* Pods-SmartPDFTools.debug.xcconfig */,
 				4AD6151FE9A19573302AA732 /* Pods-SmartPDFTools.release.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -238,6 +239,7 @@
 		8999F84E24E3FA3900DCD77C /* Resource */ = {
 			isa = PBXGroup;
 			children = (
+				89B3D39324E831F4003B8898 /* delivery-service.json */,
 				897DA37424E2B5A900D998CE /* Assets.xcassets */,
 			);
 			path = Resource;
@@ -321,6 +323,7 @@
 				89B3D38A24E7E4D6003B8898 /* ProgressView.xib in Resources */,
 				897DA37324E2B5A800D998CE /* Main.storyboard in Resources */,
 				89B3D38424E7D877003B8898 /* SelectionView.xib in Resources */,
+				89B3D39424E831F4003B8898 /* delivery-service.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
