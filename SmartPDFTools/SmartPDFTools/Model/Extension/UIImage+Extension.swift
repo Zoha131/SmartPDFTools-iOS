@@ -40,5 +40,9 @@ extension UIImage {
   static let txtTopdf = UIImage(named: "TXT to PDF")!
   static let watermarkpdf = UIImage(named: "Watermark PDF")!
   static let wordTopdf = UIImage(named: "Word to PDF")!
+
+  static let fromDevice = UIImage(named: "From Device")!
+  static let fromDrive = UIImage(named: "From Drive")!
+  static let fromDropbox = UIImage(named: "From Dropbox")!
   // swiftlint:enable force_unwrapping
 }

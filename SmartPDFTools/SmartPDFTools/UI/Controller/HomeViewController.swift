@@ -30,7 +30,7 @@ class HomeViewController: UIViewController {
     collectionView.delegate = self
     collectionView.contentInset.bottom = .collectionViewBottomInset
     collectionView.contentInset.top = .collectionViewTopInset
-    createDataSource()
+    dataSource = .createDataSource(for: collectionView)
     reloadData()
   }
 
@@ -44,162 +44,20 @@ class HomeViewController: UIViewController {
 
       let isLargeTextOn = self.traitCollection.preferredContentSizeCategory.isAccessibilityCategory
 
-      return self.createConverterSection(
+      return UICollectionViewCompositionalLayout.createConverterSection(
         for: sectionType,
         isLargeTextOn: isLargeTextOn,
         isiPhoneLandscape: isiPhoneLandscape
       )
     }
 
+    let configuration = UICollectionViewCompositionalLayoutConfiguration()
+    configuration.interSectionSpacing = .paddingNormal
+    layout.configuration = configuration
+
     layout.register(ShadowReusableView.self, forDecorationViewOfKind: ShadowReusableView.reuseIdentifier)
 
     return layout
-  }
-
-  func createSectionHeader() -> NSCollectionLayoutBoundarySupplementaryItem {
-    let headerSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(1.0),
-      heightDimension: .estimated(44)
-    )
-
-    let sectionHeader = NSCollectionLayoutBoundarySupplementaryItem(
-      layoutSize: headerSize,
-      elementKind: HeaderReusableView.reuseIdentifier,
-      alignment: .top
-    )
-
-    return sectionHeader
-  }
-
-  func createSectionShadow() -> NSCollectionLayoutDecorationItem {
-    let sectionShadow = NSCollectionLayoutDecorationItem.background(
-      elementKind: ShadowReusableView.reuseIdentifier
-    )
-
-    return sectionShadow
-  }
-
-  func createConverterSection(for sectionType: ToolSection, isLargeTextOn: Bool, isiPhoneLandscape: Bool) -> NSCollectionLayoutSection {
-    let defaultIemCount: Int
-    let defaultGroupSpacing: CGFloat
-    let defaultImtemHeight: CGFloat
-    var hasShadowDecoration = true
-
-    switch sectionType {
-    case .word, .html, .powerpoint:
-      defaultIemCount = 2
-      defaultGroupSpacing = .twoItemGroupSpacing
-      defaultImtemHeight = .itemHeight
-    case .pdf:
-      defaultIemCount = 2
-      defaultGroupSpacing = .groupSpacing
-      defaultImtemHeight = .pdfItemHeight
-    case .mega:
-      defaultIemCount = 2
-      defaultGroupSpacing = .groupSpacing
-      defaultImtemHeight = .megaItemHeight
-      hasShadowDecoration = false
-    default:
-      defaultIemCount = 3
-      defaultGroupSpacing = .groupSpacing
-      defaultImtemHeight = .itemHeight
-    }
-
-    let itemGroupSize = NSCollectionLayoutSize(
-      widthDimension: .fractionalWidth(1),
-      heightDimension: .estimated(defaultImtemHeight)
-    )
-    let layoutItem = NSCollectionLayoutItem(layoutSize: itemGroupSize)
-
-    let itemCount = isLargeTextOn ? 1 : defaultIemCount
-    let layoutGroup = NSCollectionLayoutGroup.horizontal(
-      layoutSize: itemGroupSize,
-      subitem: layoutItem,
-      count: itemCount
-    )
-
-    let interGroupSpacing: CGFloat = isiPhoneLandscape ? .paddingSmall : defaultGroupSpacing
-    layoutGroup.interItemSpacing = .fixed(interGroupSpacing)
-
-    let layoutSection = NSCollectionLayoutSection(group: layoutGroup)
-    if hasShadowDecoration {
-      layoutSection.decorationItems = [self.createSectionShadow()]
-      layoutSection.boundarySupplementaryItems = [self.createSectionHeader()]
-    }
-
-    let sectionContentInset: CGFloat = isiPhoneLandscape ? .paddingMedium : .paddingLarge
-    layoutSection.interGroupSpacing = isiPhoneLandscape ? .paddingSmall : .paddingMedium
-    layoutSection.contentInsets = NSDirectionalEdgeInsets(
-      top: sectionContentInset,
-      leading: sectionContentInset,
-      bottom: sectionContentInset,
-      trailing: sectionContentInset
-    )
-
-    return layoutSection
-  }
-
-  func createDataSource() {
-    dataSource = UICollectionViewDiffableDataSource<ToolSection, Tool>(
-      collectionView: collectionView
-    ) { collectionView, indexPath, tool in
-      let sectionType = ToolSection.allCases[indexPath.section]
-
-      switch sectionType {
-      case .pdf:
-        guard let cell = collectionView.dequeueReusableCell(
-          withReuseIdentifier: PDFToolCell.reuseIdentifier,
-          for: indexPath
-          ) as? PDFToolCell else {
-            fatalError("Unable to dequeue")
-        }
-
-        cell.tool = tool
-
-        return cell
-      case .mega:
-        guard let cell = collectionView.dequeueReusableCell(
-          withReuseIdentifier: MegaToolCell.reuseIdentifier,
-          for: indexPath
-          ) as? MegaToolCell else {
-            fatalError("Unable to dequeue")
-        }
-
-        cell.tool = tool
-
-        return cell
-      default:
-        guard let cell = collectionView.dequeueReusableCell(
-          withReuseIdentifier: ConverterToolCell.reuseIdentifier,
-          for: indexPath
-          ) as? ConverterToolCell else {
-            fatalError("Unable to dequeue")
-        }
-
-        cell.tool = tool
-
-        return cell
-      }
-    }
-
-    dataSource?.supplementaryViewProvider = {(
-      collectionView: UICollectionView,
-      kind: String,
-      indexPath: IndexPath) -> UICollectionReusableView? in
-
-      guard let headerSuplementary = collectionView.dequeueReusableSupplementaryView(
-        ofKind: HeaderReusableView.reuseIdentifier,
-        withReuseIdentifier: HeaderReusableView.reuseIdentifier,
-        for: indexPath
-        ) as? HeaderReusableView else {
-        fatalError("Headerview not found")
-      }
-
-      let section = ToolSection.allCases[indexPath.section]
-      headerSuplementary.label.text = "\(section.rawValue.uppercased()) Converter"
-
-      return headerSuplementary
-    }
   }
 
   func reloadData() {
@@ -221,5 +79,6 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     print("\(ToolSection.allCases[indexPath.section])")
+    performSegue(withIdentifier: "homeDetail", sender: nil)
   }
 }

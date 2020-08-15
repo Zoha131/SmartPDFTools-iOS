@@ -55,6 +55,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate, UISplitViewControllerDe
     collapseSecondary secondaryViewController: UIViewController,
     onto primaryViewController: UIViewController
   ) -> Bool {
-    return true
+    // Here if the secondaryViewController is not UINavigationController
+    // that means user opening the app. And while opening the app master view
+    // will be shown. But if user inside the view and rotate the device
+    // then the detail controller will be shown
+    return !(secondaryViewController is UINavigationController)
   }
 }

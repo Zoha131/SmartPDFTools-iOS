@@ -13,6 +13,12 @@
 		8921615824E4FF8A000AE622 /* MegaToolTitleView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8921615724E4FF8A000AE622 /* MegaToolTitleView.swift */; };
 		8921615A24E51AEA000AE622 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8921615924E51AEA000AE622 /* UIView+Extension.swift */; };
 		8921615E24E55FA1000AE622 /* SizeConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8921615D24E55FA1000AE622 /* SizeConstant.swift */; };
+		8921618224E59ED2000AE622 /* SelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8921618124E59ED2000AE622 /* SelectionViewController.swift */; };
+		89408E0A24E6B1C300CF5E0D /* FileChooserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89408E0924E6B1C300CF5E0D /* FileChooserCell.swift */; };
+		89408E0C24E6C5EC00CF5E0D /* FileChooserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89408E0B24E6C5EC00CF5E0D /* FileChooserData.swift */; };
+		89408E0F24E716D800CF5E0D /* CompositionalLayout+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89408E0E24E716D800CF5E0D /* CompositionalLayout+Extension.swift */; };
+		89408E1124E716EB00CF5E0D /* DiffableDataSource+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89408E1024E716EB00CF5E0D /* DiffableDataSource+Extension.swift */; };
+		89408E1424E7969400CF5E0D /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89408E1324E7969400CF5E0D /* UICollectionView+Extension.swift */; };
 		8978A60724E42C030006246C /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8978A60624E42C030006246C /* HomeViewController.swift */; };
 		8978A60A24E43E170006246C /* Tool.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8978A60924E43E170006246C /* Tool.swift */; };
 		8978A60C24E43ED60006246C /* ToolSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8978A60B24E43ED60006246C /* ToolSection.swift */; };
@@ -36,6 +42,13 @@
 		8921615724E4FF8A000AE622 /* MegaToolTitleView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MegaToolTitleView.swift; sourceTree = "<group>"; };
 		8921615924E51AEA000AE622 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		8921615D24E55FA1000AE622 /* SizeConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeConstant.swift; sourceTree = "<group>"; };
+		8921618124E59ED2000AE622 /* SelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionViewController.swift; sourceTree = "<group>"; };
+		89408E0924E6B1C300CF5E0D /* FileChooserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileChooserCell.swift; sourceTree = "<group>"; };
+		89408E0B24E6C5EC00CF5E0D /* FileChooserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileChooserData.swift; sourceTree = "<group>"; };
+		89408E0E24E716D800CF5E0D /* CompositionalLayout+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompositionalLayout+Extension.swift"; sourceTree = "<group>"; };
+		89408E1024E716EB00CF5E0D /* DiffableDataSource+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DiffableDataSource+Extension.swift"; sourceTree = "<group>"; };
+		89408E1224E72F2400CF5E0D /* SmartPDFTools.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SmartPDFTools.entitlements; sourceTree = "<group>"; };
+		89408E1324E7969400CF5E0D /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		8978A60624E42C030006246C /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		8978A60924E43E170006246C /* Tool.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tool.swift; sourceTree = "<group>"; };
 		8978A60B24E43ED60006246C /* ToolSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolSection.swift; sourceTree = "<group>"; };
@@ -73,10 +86,32 @@
 			path = View;
 			sourceTree = "<group>";
 		};
+		89408E0824E6B13F00CF5E0D /* ReusableView */ = {
+			isa = PBXGroup;
+			children = (
+				8978A61124E44EE80006246C /* ShadowReusableView.swift */,
+				8978A60F24E449F30006246C /* HeaderReusableView.swift */,
+			);
+			path = ReusableView;
+			sourceTree = "<group>";
+		};
+		89408E0D24E7168D00CF5E0D /* CollectionView */ = {
+			isa = PBXGroup;
+			children = (
+				89408E0824E6B13F00CF5E0D /* ReusableView */,
+				8999F85124E3FB0C00DCD77C /* Cell */,
+				89408E0E24E716D800CF5E0D /* CompositionalLayout+Extension.swift */,
+				89408E1024E716EB00CF5E0D /* DiffableDataSource+Extension.swift */,
+				89408E1324E7969400CF5E0D /* UICollectionView+Extension.swift */,
+			);
+			path = CollectionView;
+			sourceTree = "<group>";
+		};
 		8978A60324E429F30006246C /* Controller */ = {
 			isa = PBXGroup;
 			children = (
 				8978A60624E42C030006246C /* HomeViewController.swift */,
+				8921618124E59ED2000AE622 /* SelectionViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -87,6 +122,7 @@
 				8978A61324E470BF0006246C /* Extension */,
 				8978A60924E43E170006246C /* Tool.swift */,
 				8978A60B24E43ED60006246C /* ToolSection.swift */,
+				89408E0B24E6C5EC00CF5E0D /* FileChooserData.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -123,6 +159,7 @@
 		897DA36A24E2B5A800D998CE /* SmartPDFTools */ = {
 			isa = PBXGroup;
 			children = (
+				89408E1224E72F2400CF5E0D /* SmartPDFTools.entitlements */,
 				8978A60824E43E080006246C /* Model */,
 				8999F84E24E3FA3900DCD77C /* Resource */,
 				8999F84D24E3F9E100DCD77C /* UI */,
@@ -135,9 +172,9 @@
 		8999F84D24E3F9E100DCD77C /* UI */ = {
 			isa = PBXGroup;
 			children = (
+				89408E0D24E7168D00CF5E0D /* CollectionView */,
 				8921615624E4FF72000AE622 /* View */,
 				8978A60324E429F30006246C /* Controller */,
-				8999F85124E3FB0C00DCD77C /* Cell */,
 				897DA37124E2B5A800D998CE /* Main.storyboard */,
 				897DA37624E2B5A900D998CE /* LaunchScreen.storyboard */,
 				897DA36D24E2B5A800D998CE /* SceneDelegate.swift */,
@@ -157,10 +194,9 @@
 			isa = PBXGroup;
 			children = (
 				8978A60D24E4443A0006246C /* ConverterToolCell.swift */,
-				8978A60F24E449F30006246C /* HeaderReusableView.swift */,
-				8978A61124E44EE80006246C /* ShadowReusableView.swift */,
 				8921615224E4F052000AE622 /* PDFToolCell.swift */,
 				8921615424E4F683000AE622 /* MegaToolCell.swift */,
+				89408E0924E6B1C300CF5E0D /* FileChooserCell.swift */,
 			);
 			path = Cell;
 			sourceTree = "<group>";
@@ -262,16 +298,22 @@
 				8921615A24E51AEA000AE622 /* UIView+Extension.swift in Sources */,
 				897DA36E24E2B5A800D998CE /* SceneDelegate.swift in Sources */,
 				8921615E24E55FA1000AE622 /* SizeConstant.swift in Sources */,
+				89408E0F24E716D800CF5E0D /* CompositionalLayout+Extension.swift in Sources */,
 				8978A60E24E4443A0006246C /* ConverterToolCell.swift in Sources */,
 				8978A61524E470F60006246C /* UIImage+Extension.swift in Sources */,
 				8978A61024E449F30006246C /* HeaderReusableView.swift in Sources */,
+				89408E1424E7969400CF5E0D /* UICollectionView+Extension.swift in Sources */,
 				8921615824E4FF8A000AE622 /* MegaToolTitleView.swift in Sources */,
 				8978A60724E42C030006246C /* HomeViewController.swift in Sources */,
 				8921615524E4F683000AE622 /* MegaToolCell.swift in Sources */,
 				8978A60C24E43ED60006246C /* ToolSection.swift in Sources */,
 				8921615124E4E765000AE622 /* UILabel+Extension.swift in Sources */,
+				89408E0C24E6C5EC00CF5E0D /* FileChooserData.swift in Sources */,
+				89408E1124E716EB00CF5E0D /* DiffableDataSource+Extension.swift in Sources */,
+				8921618224E59ED2000AE622 /* SelectionViewController.swift in Sources */,
 				8978A60A24E43E170006246C /* Tool.swift in Sources */,
 				8921615324E4F052000AE622 /* PDFToolCell.swift in Sources */,
+				89408E0A24E6B1C300CF5E0D /* FileChooserCell.swift in Sources */,
 				8978A61224E44EE80006246C /* ShadowReusableView.swift in Sources */,
 				8978A61724E4711E0006246C /* UIColor+Extension.swift in Sources */,
 			);
@@ -417,6 +459,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SmartPDFTools/SmartPDFTools.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4UDSZ3HFA2;
 				INFOPLIST_FILE = SmartPDFTools/Info.plist;
@@ -435,6 +478,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = SmartPDFTools/SmartPDFTools.entitlements;
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = 4UDSZ3HFA2;
 				INFOPLIST_FILE = SmartPDFTools/Info.plist;

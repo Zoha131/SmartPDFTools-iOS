@@ -35,4 +35,23 @@ extension UIView {
       shadowOpacity: 0.1
     )
   }
+
+  func applyChooseButtonShadow(withRadius radius: CGFloat) {
+    applyShaddow(
+      withRadius: radius,
+      backgroundColor: .cardBackground,
+      shadowColor: .black,
+      shadowOpacity: 0.1
+    )
+  }
+
+  func updateSponsoreView() {
+    let screenHeight = UIScreen.main.bounds.height
+
+    if screenHeight < 800 {
+      isHidden = true
+    } else {
+      isHidden = false
+    }
+  }
 }

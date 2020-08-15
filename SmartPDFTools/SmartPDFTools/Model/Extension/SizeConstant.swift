@@ -28,4 +28,7 @@ extension CGFloat {
 
   static let collectionViewTopInset: CGFloat = 20
   static let collectionViewBottomInset: CGFloat = 60
+
+  static let fileChooserImageSize: CGFloat = 69
+  static let bigFileChooserImageSize: CGFloat = 89
 }
