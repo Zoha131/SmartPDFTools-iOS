@@ -16,7 +16,7 @@ class SelectionViewController: UIViewController {
   @IBOutlet weak var collectionView: UICollectionView!
   @IBOutlet weak var sponsoreView: UIImageView!
 
-  let chooserCardBorder = CAShapeLayer()
+  let borderLayer: CAShapeLayer = .createBorderLayer()
   var dataSource: UICollectionViewDiffableDataSource<ToolSection, Tool>?
 
   override func viewDidLoad() {
@@ -26,29 +26,23 @@ class SelectionViewController: UIViewController {
     fromDevice.applyChooseButtonShadow(withRadius: .bigFileChooserImageSize / 2)
     fromDropbox.applyChooseButtonShadow(withRadius: .fileChooserImageSize / 2)
 
-    chooserCardBorder.strokeColor = UIColor.secondaryLabel.cgColor
-    chooserCardBorder.lineDashPattern = [10, 8]
-    chooserCardBorder.frame = chooserCardView.bounds
-    chooserCardBorder.fillColor = UIColor.clear.cgColor
-    chooserCardBorder.path = UIBezierPath(roundedRect: chooserCardView.bounds, cornerRadius: 10).cgPath
-    chooserCardView.layer.addSublayer(chooserCardBorder)
+    chooserCardView.layer.addSublayer(borderLayer)
+    borderLayer.updateBorderLayer(with: chooserCardView.bounds)
 
-    // Do any additional setup after loading the view.
     dataSource = collectionView.configureMoreToolCollectionView()
-    sponsoreView.updateSponsoreView()
+    sponsoreView.updateVisibility()
   }
 
   override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
     super.traitCollectionDidChange(previousTraitCollection)
 
-    chooserCardBorder.strokeColor = UIColor.secondaryLabel.cgColor
-    sponsoreView.updateSponsoreView()
+    borderLayer.updateBorderLayer(with: chooserCardView.bounds)
+    sponsoreView.updateVisibility()
   }
 
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
 
-    chooserCardBorder.frame = chooserCardView.bounds
-    chooserCardBorder.path = UIBezierPath(roundedRect: chooserCardView.bounds, cornerRadius: 10).cgPath
+    borderLayer.updateBorderLayer(with: chooserCardView.bounds)
   }
 }

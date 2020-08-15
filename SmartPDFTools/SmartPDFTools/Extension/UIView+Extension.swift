@@ -45,7 +45,7 @@ extension UIView {
     )
   }
 
-  func updateSponsoreView() {
+  func updateVisibility() {
     let screenHeight = UIScreen.main.bounds.height
 
     if screenHeight < 800 {
