@@ -13,6 +13,8 @@ class HomeViewController: UIViewController {
 
   var dataSource: UICollectionViewDiffableDataSource<ToolSection, Tool>?
 
+  var selectedTool: Tool?
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -32,6 +34,15 @@ class HomeViewController: UIViewController {
     collectionView.contentInset.top = .collectionViewTopInset
     dataSource = .createDataSource(for: collectionView)
     reloadData()
+  }
+
+  override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+    if
+      let navigationController = segue.destination as? UINavigationController,
+      let selectionController = navigationController.topViewController as? SelectionViewController,
+      let tool = selectedTool {
+      selectionController.tool = tool
+    }
   }
 
   func createCompositionalLayout() -> UICollectionViewCompositionalLayout {
@@ -78,7 +89,11 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UICollectionViewDelegate {
   func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-    print("\(ToolSection.allCases[indexPath.section])")
-    performSegue(withIdentifier: "homeDetail", sender: nil)
+    let section = ToolSection.allCases[indexPath.section]
+
+    if let tool = Tool.allToolMap[section] {
+      selectedTool = tool[indexPath.row]
+      performSegue(withIdentifier: "homeDetail", sender: nil)
+    }
   }
 }

@@ -21,6 +21,9 @@ class SelectionViewController: UIViewController {
   let progressView = ProgressView.fromNib()
   let completeView = CompleteView.fromNib()
 
+  // swiftlint:disable:next implicitly_unwrapped_optional
+  var tool: Tool!
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -42,6 +45,8 @@ class SelectionViewController: UIViewController {
     progressView.onCancelAction = {
       self.moveForward(from: self.progressView, to: self.completeView)
     }
+
+    title = tool.title
   }
 
   func moveForward(from viewFrom: UIView, to viewTo: UIView) {
