@@ -1,0 +1,6 @@
+module Pods_SmartPDFTools {
+  umbrella header "Pods-SmartPDFTools-umbrella.h"
+
+  export *
+  module * { export * }
+}

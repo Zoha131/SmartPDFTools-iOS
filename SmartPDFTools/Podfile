@@ -1,0 +1,8 @@
+platform :ios, '9.0'
+
+target 'SmartPDFTools' do
+
+  # Pods for SmartPDFTools
+  pod 'lottie-ios'
+
+end
