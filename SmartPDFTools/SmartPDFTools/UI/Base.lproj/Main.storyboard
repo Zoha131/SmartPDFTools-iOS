@@ -221,9 +221,6 @@
                                             <constraint firstAttribute="width" constant="69" id="AOW-Rk-nhR"/>
                                         </constraints>
                                         <state key="normal" image="From Dropbox"/>
-                                        <connections>
-                                            <segue destination="xxN-Rv-QRk" kind="show" id="fKR-tu-jzL"/>
-                                        </connections>
                                     </button>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="From Drive" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WFc-nr-Xtb">
                                         <rect key="frame" x="29.666666666666657" y="195" width="70" height="17"/>
@@ -324,9 +321,6 @@
                     <connections>
                         <outlet property="chooserCardView" destination="J9l-QV-04O" id="R5C-XO-lRh"/>
                         <outlet property="collectionView" destination="p72-TY-Jh8" id="cPI-KA-lzM"/>
-                        <outlet property="fromDevice" destination="vmx-HQ-frI" id="hsf-gg-pLc"/>
-                        <outlet property="fromDrive" destination="Uy8-QP-FpN" id="WJk-Xh-Z8K"/>
-                        <outlet property="fromDropbox" destination="Sv7-sI-Xh7" id="ijN-7J-0RL"/>
                         <outlet property="sponsoreView" destination="Vaa-li-1X5" id="cO7-wv-mmt"/>
                         <segue destination="xxN-Rv-QRk" kind="show" identifier="upload" id="Kbg-Kg-MaX"/>
                     </connections>
@@ -721,7 +715,6 @@
     <inferredMetricsTieBreakers>
         <segue reference="XEe-Sd-XFu"/>
         <segue reference="k0v-kc-LDp"/>
-        <segue reference="Kbg-Kg-MaX"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Encrypt PDF" width="19" height="19"/>

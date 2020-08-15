@@ -14,6 +14,9 @@ class UploadView: UIView {
   @IBOutlet weak var uploadButton: UIButton!
   @IBOutlet weak var cancelButton: UIButton!
 
+  var onUploadAction: (() -> Void)?
+  var onCancelAction: (() -> Void)?
+
   override init(frame: CGRect) {
     super.init(frame: frame)
   }
@@ -33,5 +36,13 @@ class UploadView: UIView {
     cancelButton.applyButtonTransparent(withBackgroundColor: color)
     toolIcon.tintColor = color
     fileLabel.text = fileName
+  }
+
+  @IBAction func cancelAction(_ sender: Any) {
+    onCancelAction?()
+  }
+
+  @IBAction func uploadAction(_ sender: Any) {
+    onUploadAction?()
   }
 }

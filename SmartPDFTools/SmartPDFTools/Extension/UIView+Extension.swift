@@ -51,6 +51,18 @@ extension UIView {
     clipsToBounds = true
   }
 
+  func setInside(into parent: UIView) {
+    translatesAutoresizingMaskIntoConstraints = false
+    parent.addSubview(self)
+
+    NSLayoutConstraint.activate([
+      topAnchor.constraint(equalTo: parent.topAnchor),
+      bottomAnchor.constraint(equalTo: parent.bottomAnchor),
+      trailingAnchor.constraint(equalTo: parent.trailingAnchor),
+      leadingAnchor.constraint(equalTo: parent.leadingAnchor)
+    ])
+  }
+
   static func fromNib() -> Self {
     let name = "\(Self.self)"
     guard

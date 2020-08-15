@@ -15,7 +15,7 @@ class ProgressView: UIView {
   @IBOutlet weak var titleView: UILabel!
   @IBOutlet weak var animationView: UIView!
 
-  var onButtonClick: (() -> Void)?
+  var onCancelAction: (() -> Void)?
 
   override init(frame: CGRect) {
     super.init(frame: frame)
@@ -33,5 +33,9 @@ class ProgressView: UIView {
   private func configureViews() {
     applyRadius()
     button.applyButtonTransparent(withBackgroundColor: .pdfTops)
+  }
+
+  @IBAction func cancelAction(_ sender: Any) {
+    onCancelAction?()
   }
 }

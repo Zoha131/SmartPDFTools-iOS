@@ -36,6 +36,9 @@
                     <fontDescription key="fontDescription" type="boldSystem" pointSize="15"/>
                     <inset key="contentEdgeInsets" minX="13" minY="0.0" maxX="0.0" maxY="0.0"/>
                     <state key="normal" title="Change"/>
+                    <connections>
+                        <action selector="cancelAction:" destination="wPQ-IA-lIB" eventType="touchUpInside" id="GVL-F1-wF3"/>
+                    </connections>
                 </button>
                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="crC-Ej-Vn7">
                     <rect key="frame" x="250.5" y="247" width="120" height="44"/>
@@ -49,6 +52,9 @@
                     <state key="normal" title="Upload">
                         <color key="titleColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     </state>
+                    <connections>
+                        <action selector="uploadAction:" destination="wPQ-IA-lIB" eventType="touchUpInside" id="c9B-Qn-MbB"/>
+                    </connections>
                 </button>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="very long title.pdf" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HWo-M0-6kk">
                     <rect key="frame" x="158.5" y="159.5" width="97" height="14"/>
@@ -67,10 +73,8 @@
                 <constraint firstItem="9vQ-qt-Qua" firstAttribute="centerX" secondItem="wPQ-IA-lIB" secondAttribute="centerX" id="ROx-nG-lK2"/>
                 <constraint firstItem="crC-Ej-Vn7" firstAttribute="centerX" secondItem="wPQ-IA-lIB" secondAttribute="centerX" multiplier="1.5" id="SlD-K2-yVO"/>
                 <constraint firstItem="dtA-Ba-axt" firstAttribute="centerX" secondItem="wPQ-IA-lIB" secondAttribute="centerX" multiplier="0.5" id="VYZ-lA-OhU"/>
-                <constraint firstAttribute="width" priority="999" constant="400" id="YqI-Eh-d56"/>
                 <constraint firstAttribute="trailing" secondItem="8D3-gh-gpZ" secondAttribute="trailing" constant="10" id="lJb-tg-g4D"/>
                 <constraint firstItem="8D3-gh-gpZ" firstAttribute="top" secondItem="wPQ-IA-lIB" secondAttribute="top" constant="20" id="qgk-Bb-Z7i"/>
-                <constraint firstAttribute="height" priority="999" constant="300" id="sYK-Ih-Jsp"/>
                 <constraint firstAttribute="bottom" secondItem="dtA-Ba-axt" secondAttribute="bottom" constant="20" id="z1k-I3-sni"/>
             </constraints>
             <freeformSimulatedSizeMetrics key="simulatedDestinationMetrics"/>

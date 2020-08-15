@@ -9,9 +9,6 @@
 import UIKit
 
 class SelectionViewController: UIViewController {
-  @IBOutlet weak var fromDrive: UIButton!
-  @IBOutlet weak var fromDevice: UIButton!
-  @IBOutlet weak var fromDropbox: UIButton!
   @IBOutlet weak var chooserCardView: UIView!
   @IBOutlet weak var collectionView: UICollectionView!
   @IBOutlet weak var sponsoreView: UIImageView!
@@ -19,15 +16,13 @@ class SelectionViewController: UIViewController {
   let borderLayer: CAShapeLayer = .createBorderLayer()
   var dataSource: UICollectionViewDiffableDataSource<ToolSection, Tool>?
 
-  // TODO: There might be a better way to load views
-  let selectionView = UploadView.fromNib()
+  let selectionView = SelectionView.fromNib()
+  let uploadView = UploadView.fromNib()
+  let progressView = ProgressView.fromNib()
+  let completeView = CompleteView.fromNib()
 
   override func viewDidLoad() {
     super.viewDidLoad()
-
-    fromDrive.applyChooseButtonShadow(withRadius: .fileChooserImageSize / 2)
-    fromDevice.applyChooseButtonShadow(withRadius: .bigFileChooserImageSize / 2)
-    fromDropbox.applyChooseButtonShadow(withRadius: .fileChooserImageSize / 2)
 
     chooserCardView.layer.addSublayer(borderLayer)
     borderLayer.updateBorderLayer(with: chooserCardView.bounds)
@@ -35,19 +30,36 @@ class SelectionViewController: UIViewController {
     dataSource = collectionView.configureMoreToolCollectionView()
     sponsoreView.updateVisibility()
 
-    loadViews()
+    selectionView.setInside(into: chooserCardView)
+    selectionView.onDropboxAction = {
+      self.moveForward(from: self.selectionView, to: self.uploadView)
+    }
+
+    uploadView.onUploadAction = {
+      self.moveForward(from: self.uploadView, to: self.progressView)
+    }
+
+    progressView.onCancelAction = {
+      self.moveForward(from: self.progressView, to: self.completeView)
+    }
   }
 
-  func loadViews() {
-    selectionView.translatesAutoresizingMaskIntoConstraints = false
-    chooserCardView.addSubview(selectionView)
+  func moveForward(from viewFrom: UIView, to viewTo: UIView) {
+    viewTo.setInside(into: self.chooserCardView)
+    viewTo.alpha = 0.0
 
-    NSLayoutConstraint.activate([
-      selectionView.topAnchor.constraint(equalTo: chooserCardView.topAnchor),
-      selectionView.bottomAnchor.constraint(equalTo: chooserCardView.bottomAnchor),
-      selectionView.trailingAnchor.constraint(equalTo: chooserCardView.trailingAnchor),
-      selectionView.leadingAnchor.constraint(equalTo: chooserCardView.leadingAnchor)
-    ])
+    UIView.animate(withDuration: 0.4) {
+      viewTo.alpha = 1.0
+    }
+
+    UIView.animate(
+      withDuration: 0.8,
+      animations: {
+        viewFrom.alpha = 0.0
+      }, completion: { _ in
+        viewFrom.removeFromSuperview()
+      }
+    )
   }
 
   override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
@@ -59,7 +71,6 @@ class SelectionViewController: UIViewController {
 
   override func viewDidLayoutSubviews() {
     super.viewDidLayoutSubviews()
-
     borderLayer.updateBorderLayer(with: chooserCardView.bounds)
   }
 }
