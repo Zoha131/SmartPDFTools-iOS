@@ -28,14 +28,25 @@ class ProgressView: UIView {
 
   override func awakeFromNib() {
     super.awakeFromNib()
-    configureViews()
+    applyRadius()
   }
 
-  private func configureViews() {
-    applyRadius()
-    button.applyButtonTransparent(withBackgroundColor: .pdfTops)
+  func configureViews(withColor color: UIColor, animation lottiName: String) {
+    button.applyButtonTransparent(withBackgroundColor: color)
+    button.setTitle("Cancel", for: .normal)
+
+    progressBar.setProgress(0, animated: false)
+    progressTxt.text = "0%"
+    animationView.animation = Animation.named(lottiName)
     animationView.loopMode = .loop
     animationView.play()
+  }
+
+  func setProgress(_ progress: Float) {
+    let parcentage = Int(progress * 100.00)
+
+    progressBar.setProgress(progress, animated: true)
+    progressTxt.text = "\(parcentage)%"
   }
 
   @IBAction func cancelAction(_ sender: Any) {

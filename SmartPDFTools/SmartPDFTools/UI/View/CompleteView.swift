@@ -22,12 +22,12 @@ class CompleteView: UIView {
 
   override func awakeFromNib() {
     super.awakeFromNib()
-    configureViews()
+    configureViews(withColor: .txtTopdf)
   }
 
-  private func configureViews() {
+  func configureViews(withColor color: UIColor) {
     applyRadius()
-    downloadButton.applyButtonShadow(withBackgroundColor: .pdfTops)
+    downloadButton.applyButtonShadow(withBackgroundColor: color)
   }
   @IBAction func downloadAction(_ sender: Any) {
     onDownloadAction?()

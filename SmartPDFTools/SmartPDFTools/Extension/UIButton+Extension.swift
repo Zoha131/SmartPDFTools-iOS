@@ -11,6 +11,7 @@ import UIKit
 extension UIButton {
   func applyButtonShadow(withBackgroundColor color: UIColor) {
     backgroundColor = color
+    setTitleColor(.white, for: .normal)
     layer.cornerRadius = 8
     layer.shadowColor = UIColor.black.cgColor
     layer.shadowRadius = 5

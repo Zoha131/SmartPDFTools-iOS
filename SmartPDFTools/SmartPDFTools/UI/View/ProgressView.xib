@@ -27,10 +27,10 @@
                         <constraint firstAttribute="height" constant="100" id="yaD-3w-4wD"/>
                     </constraints>
                     <userDefinedRuntimeAttributes>
-                        <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="delivery-service"/>
+                        <userDefinedRuntimeAttribute type="string" keyPath="animationName" value="download_one"/>
                     </userDefinedRuntimeAttributes>
                 </view>
-                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" progress="0.5" translatesAutoresizingMaskIntoConstraints="NO" id="VWH-dw-FIO">
+                <progressView opaque="NO" contentMode="scaleToFill" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="VWH-dw-FIO">
                     <rect key="frame" x="62" y="175" width="290" height="2"/>
                 </progressView>
                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="J0e-9C-An3">

@@ -27,14 +27,15 @@ class UploadView: UIView {
 
   override func awakeFromNib() {
     super.awakeFromNib()
-    configureViews(withColor: .pdfTops, fileName: "awesome.pdf")
+    configureViews(withColor: .pdfTojpg, image: .pdfTojpg, fileName: "awesome.pdf")
   }
 
-  private func configureViews(withColor color: UIColor, fileName: String) {
+  func configureViews(withColor color: UIColor, image: UIImage, fileName: String) {
     applyRadius()
     uploadButton.applyButtonShadow(withBackgroundColor: color)
     cancelButton.applyButtonTransparent(withBackgroundColor: color)
     toolIcon.tintColor = color
+    toolIcon.image = image
     fileLabel.text = fileName
   }
 
