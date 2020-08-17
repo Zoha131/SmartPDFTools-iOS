@@ -25,16 +25,14 @@ class SelectionViewController: UIViewController {
 
   // swiftlint:disable:next implicitly_unwrapped_optional
   var tool: Tool!
-  var rest = RestManager()
+  lazy var service = { RestService(delegate: self) }()
   var selectedURLFile: URL?
-  var downloadURL: String = "https://pdftoworder.com/download/60X8tCdr0ienj6p20t/47429342-sampletext-txt.pdf"
-  var isDownloaded = false
-  var localDownlaodedURL: URL!
+  var downloadURL: String?
+  var localDownlaodedURL: URL?
 
   override func viewDidLoad() {
     super.viewDidLoad()
 
-    rest.delegate = self
     chooserCardView.layer.addSublayer(borderLayer)
     borderLayer.updateBorderLayer(with: chooserCardView.bounds)
 
@@ -55,26 +53,19 @@ class SelectionViewController: UIViewController {
     }
 
     uploadView.onUploadAction = {
-      self.moveForward(from: self.uploadView, to: self.progressView)
-      self.progressView.configureViews(withColor: self.tool.color, animation: "upload_two")
-      guard let url = self.selectedURLFile else {
-        fatalError("Url can't be nil at this stage")
-      }
-
-      self.uploadSingleFile(fileURL: url)
+      self.uploadFile()
     }
 
     progressView.onCancelAction = {
-      if self.isDownloaded {
-        self.viewPDF()
-      }
+
     }
 
     completeView.onDownloadAction = {
-      self.download()
-      self.moveForward(from: self.completeView, to: self.progressView)
-      self.progressView.titleView.text = "Downloading"
-      self.progressView.configureViews(withColor: self.tool.color, animation: "download_one")
+      if self.localDownlaodedURL != nil {
+        self.viewPDF()
+      }else{
+        self.downloadFile()
+      }
     }
 
     title = tool.title
@@ -135,80 +126,46 @@ extension SelectionViewController: URLSessionTaskDelegate {
     progressView.setProgress(uploadProgress)
   }
 
-  func uploadSingleFile(fileURL: URL) {
-    guard fileURL.startAccessingSecurityScopedResource() else {
-      fatalError("Unable to open file")
+  func uploadFile() {
+    guard let fileURL = selectedURLFile else {
+      fatalError("Url can't be nil at this stage")
     }
 
-    defer {
-      fileURL.stopAccessingSecurityScopedResource()
-    }
+    localDownlaodedURL = nil
+    moveForward(from: uploadView, to: progressView)
+    progressView.titleView.text = "Uploading"
+    progressView.configureViews(withColor: tool.color, animation: "upload_two")
 
-    let fileInfo = RestManager.FileInfo(
-      withFileURL: fileURL,
-      filename: fileURL.lastPathComponent,
-      name: tool.supportMultipleInput ? "input[0]" : "input",
-      mimetype: fileURL.mimeType()
-    )
-
-    rest.httpBodyParameters.add(value: "k4xeEyhI2QRHlGCGaNl7c3feRDZY690", forKey: "api_key")
-    rest.httpBodyParameters.add(value: tool.toolID, forKey: "tool_uid")
-    upload(files: [fileInfo], toURL: URL(string: "https://pdftoworder.com/api/convert"))
-  }
-
-  func upload(files: [RestManager.FileInfo], toURL url: URL?) {
-    if let uploadURL = url {
-      rest.upload(files: files, toURL: uploadURL, withHttpMethod: .post) { results, failedFilesList in
-        print("HTTP status code:", results.response?.httpStatusCode ?? 0)
-
-        if let error = results.error {
-          print(error)
-        }
-
-        if let data = results.data {
-          if let toDictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) {
-            self.moveForward(from: self.progressView, to: self.completeView)
-            self.completeView.configureViews(withColor: self.tool.color)
-            print(toDictionary)
-          }
-        }
-
-        if let failedFiles = failedFilesList {
-          for file in failedFiles {
-            print(file)
-          }
-        }
+    service.uploadSingleFile(fileURL: fileURL, toolID: tool.toolID) { resul in
+      switch resul {
+      case .success(let downloadURL):
+        self.downloadURL = downloadURL
+        self.moveForward(from: self.progressView, to: self.completeView)
+        self.completeView.configureViews(withColor: self.tool.color, title: "Upload Completed", buttonTitle: "Download")
+      case .failure(let error):
+        print(error.localizedDescription)
       }
     }
   }
 
-  func download() {
-    if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
-      let remoteURL = URL(string: downloadURL) {
-        let localURL = documentDirectory.appendingPathComponent("/" + "474336-sampletexrrt-txt.pdf")
+  func downloadFile() {
+    guard let downloadURL = downloadURL else {
+      fatalError("Url can't be nil at this stage")
+    }
 
-        let urlSessionConfig = URLSessionConfiguration.default
-        let session = URLSession(configuration: urlSessionConfig, delegate: self, delegateQueue: .main)
-        var request = URLRequest(url: remoteURL)
-        request.httpMethod = "GET"
+    moveForward(from: completeView, to: progressView)
+    progressView.titleView.text = "Downloading"
+    progressView.configureViews(withColor: tool.color, animation: "download_one")
 
-        let task = session.downloadTask(with: request) { tempLocalURL, _, error in
-          if let tempLocalURL = tempLocalURL, error == nil {
-            do {
-              try FileManager.default.copyItem(at: tempLocalURL, to: localURL)
-              self.localDownlaodedURL = localURL
-              self.progressView.button.applyButtonShadow(withBackgroundColor: self.tool.color)
-              self.progressView.progressBar.setProgress(1, animated: true)
-              self.progressView.progressTxt.text = "Downlaod Completed"
-              self.progressView.button.setTitle("View", for: .normal)
-              self.isDownloaded = true
-            } catch {
-              print("Download Failed")
-            }
-          }
-        }
-
-        task.resume()
+    service.download(url: downloadURL) { result in
+      switch result {
+      case .success( let fileURL):
+        self.localDownlaodedURL = fileURL
+        self.moveForward(from: self.progressView, to: self.completeView)
+        self.completeView.configureViews(withColor: self.tool.color, title: "Download Completed", buttonTitle: "View")
+      case .failure(let error):
+        print(error.localizedDescription)
+      }
     }
   }
 }
@@ -223,7 +180,11 @@ extension SelectionViewController: QLPreviewControllerDataSource {
     _ controller: QLPreviewController,
     previewItemAt index: Int
   ) -> QLPreviewItem {
-    localDownlaodedURL as NSURL
+    guard let localDownlaodedURL = localDownlaodedURL else{
+      fatalError("LocalDownloadURL Can't be null at this position")
+    }
+
+    return localDownlaodedURL as NSURL
   }
 
   func viewPDF() {

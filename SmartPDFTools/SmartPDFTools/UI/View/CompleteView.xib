@@ -58,6 +58,8 @@
             <viewLayoutGuide key="safeArea" id="gwN-Fe-XUp"/>
             <connections>
                 <outlet property="downloadButton" destination="RRT-rq-F8T" id="At0-DZ-Dd1"/>
+                <outlet property="image" destination="3ii-uk-PIu" id="vEe-XV-ng9"/>
+                <outlet property="titleLabel" destination="0fk-BM-umy" id="NMb-fE-EWf"/>
             </connections>
             <point key="canvasLocation" x="134.78260869565219" y="347.87946428571428"/>
         </view>

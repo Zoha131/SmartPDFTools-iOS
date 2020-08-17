@@ -13,14 +13,15 @@ class RestManager {
   // MARK: - Properties
 
   var requestHttpHeaders = RestEntity()
-
   var urlQueryParameters = RestEntity()
-
   var httpBodyParameters = RestEntity()
-
   var httpBody: Data?
 
-  var delegate: URLSessionTaskDelegate?
+  let session: URLSession
+
+  init(session: URLSession) {
+    self.session = session
+  }
 
   // MARK: - Public Methods
 
@@ -67,7 +68,8 @@ class RestManager {
 
   func upload(files: [FileInfo], toURL url: URL,
               withHttpMethod httpMethod: HttpMethod,
-              completion: @escaping(_ result: Results, _ failedFiles: [String]?) -> Void) {
+              completion: @escaping(_ result: Results, _ failedFiles: [String]?) -> Void
+  ) {
 
     DispatchQueue.global(qos: .userInitiated).async { [weak self] in
       let targetURL = self?.addURLQueryParameters(toURL: url)
@@ -80,15 +82,13 @@ class RestManager {
 
       guard let request = self?.prepareRequest(withURL: targetURL, httpBody: body, httpMethod: httpMethod) else { completion(Results(withError: CustomError.failedToCreateRequest), nil); return }
 
-      let sessionConfiguration = URLSessionConfiguration.default
-      let session = URLSession(configuration: sessionConfiguration, delegate: self?.delegate, delegateQueue: .main)
-      let task = session.uploadTask(with: request, from: nil, completionHandler: { (data, response, error) in
+      let task = self?.session.uploadTask(with: request, from: nil, completionHandler: { (data, response, error) in
         completion(Results(withData: data,
                            response: Response(fromURLResponse: response),
                            error: error),
                    failedFilenames)
       })
-      task.resume()
+      task?.resume()
     }
   }
 

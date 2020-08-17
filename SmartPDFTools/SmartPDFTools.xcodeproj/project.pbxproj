@@ -16,6 +16,9 @@
 		8921615E24E55FA1000AE622 /* SizeConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8921615D24E55FA1000AE622 /* SizeConstant.swift */; };
 		8921618224E59ED2000AE622 /* SelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8921618124E59ED2000AE622 /* SelectionViewController.swift */; };
 		8939758C24EAAD7300AC4B82 /* URI+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8939758B24EAAD7300AC4B82 /* URI+Extension.swift */; };
+		8939758E24EABA4D00AC4B82 /* ConversionResult.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8939758D24EABA4D00AC4B82 /* ConversionResult.swift */; };
+		8939759024EAC28300AC4B82 /* RestService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8939758F24EAC28300AC4B82 /* RestService.swift */; };
+		8939759224EAD1F900AC4B82 /* ConversionError.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8939759124EAD1F900AC4B82 /* ConversionError.swift */; };
 		89408E0A24E6B1C300CF5E0D /* FileChooserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89408E0924E6B1C300CF5E0D /* FileChooserCell.swift */; };
 		89408E0C24E6C5EC00CF5E0D /* FileChooserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89408E0B24E6C5EC00CF5E0D /* FileChooserData.swift */; };
 		89408E0F24E716D800CF5E0D /* CompositionalLayout+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89408E0E24E716D800CF5E0D /* CompositionalLayout+Extension.swift */; };
@@ -78,6 +81,9 @@
 		8921615D24E55FA1000AE622 /* SizeConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeConstant.swift; sourceTree = "<group>"; };
 		8921618124E59ED2000AE622 /* SelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionViewController.swift; sourceTree = "<group>"; };
 		8939758B24EAAD7300AC4B82 /* URI+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URI+Extension.swift"; sourceTree = "<group>"; };
+		8939758D24EABA4D00AC4B82 /* ConversionResult.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionResult.swift; sourceTree = "<group>"; };
+		8939758F24EAC28300AC4B82 /* RestService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RestService.swift; sourceTree = "<group>"; };
+		8939759124EAD1F900AC4B82 /* ConversionError.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConversionError.swift; sourceTree = "<group>"; };
 		89408E0924E6B1C300CF5E0D /* FileChooserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileChooserCell.swift; sourceTree = "<group>"; };
 		89408E0B24E6C5EC00CF5E0D /* FileChooserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileChooserData.swift; sourceTree = "<group>"; };
 		89408E0E24E716D800CF5E0D /* CompositionalLayout+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompositionalLayout+Extension.swift"; sourceTree = "<group>"; };
@@ -211,6 +217,7 @@
 				8978A60924E43E170006246C /* Tool.swift */,
 				8978A60B24E43ED60006246C /* ToolSection.swift */,
 				89408E0B24E6C5EC00CF5E0D /* FileChooserData.swift */,
+				8939758D24EABA4D00AC4B82 /* ConversionResult.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -333,6 +340,8 @@
 			isa = PBXGroup;
 			children = (
 				89F5E86D24E909640090C31C /* RestManager.swift */,
+				8939758F24EAC28300AC4B82 /* RestService.swift */,
+				8939759124EAD1F900AC4B82 /* ConversionError.swift */,
 			);
 			path = Network;
 			sourceTree = "<group>";
@@ -483,6 +492,7 @@
 				89408E0F24E716D800CF5E0D /* CompositionalLayout+Extension.swift in Sources */,
 				8978A60E24E4443A0006246C /* ConverterToolCell.swift in Sources */,
 				8978A61524E470F60006246C /* UIImage+Extension.swift in Sources */,
+				8939759224EAD1F900AC4B82 /* ConversionError.swift in Sources */,
 				8978A61024E449F30006246C /* HeaderReusableView.swift in Sources */,
 				89B3D39224E7FC2F003B8898 /* UIButton+Extension.swift in Sources */,
 				89408E1424E7969400CF5E0D /* UICollectionView+Extension.swift in Sources */,
@@ -494,8 +504,10 @@
 				8978A60C24E43ED60006246C /* ToolSection.swift in Sources */,
 				8921615124E4E765000AE622 /* UILabel+Extension.swift in Sources */,
 				89B3D37E24E7A68D003B8898 /* CAShapeLayer+Extension.swift in Sources */,
+				8939759024EAC28300AC4B82 /* RestService.swift in Sources */,
 				89408E0C24E6C5EC00CF5E0D /* FileChooserData.swift in Sources */,
 				89408E1124E716EB00CF5E0D /* DiffableDataSource+Extension.swift in Sources */,
+				8939758E24EABA4D00AC4B82 /* ConversionResult.swift in Sources */,
 				89F5E86E24E909640090C31C /* RestManager.swift in Sources */,
 				8921618224E59ED2000AE622 /* SelectionViewController.swift in Sources */,
 				8978A60A24E43E170006246C /* Tool.swift in Sources */,

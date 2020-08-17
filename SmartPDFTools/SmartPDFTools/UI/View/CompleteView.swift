@@ -10,6 +10,9 @@ import UIKit
 
 class CompleteView: UIView {
   @IBOutlet weak var downloadButton: UIButton!
+  @IBOutlet weak var titleLabel: UILabel!
+  @IBOutlet weak var image: UIImageView!
+  
   var onDownloadAction: (() -> Void)?
 
   override init(frame: CGRect) {
@@ -22,12 +25,13 @@ class CompleteView: UIView {
 
   override func awakeFromNib() {
     super.awakeFromNib()
-    configureViews(withColor: .txtTopdf)
   }
 
-  func configureViews(withColor color: UIColor) {
+  func configureViews(withColor color: UIColor, title: String, buttonTitle: String) {
     applyRadius()
+    titleLabel.text = title
     downloadButton.applyButtonShadow(withBackgroundColor: color)
+    downloadButton.setTitle(buttonTitle, for: .normal)
   }
   @IBAction func downloadAction(_ sender: Any) {
     onDownloadAction?()
