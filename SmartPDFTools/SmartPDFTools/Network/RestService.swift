@@ -10,13 +10,14 @@ import Foundation
 import Combine
 
 class RestService: NSObject {
-
   private lazy var session: URLSession = {
     URLSession(configuration: .default, delegate: self, delegateQueue: .main)
   }()
+
   private lazy var restManager: RestManager = {
     RestManager(session: self.session)
   }()
+
   private let uploadURL: URL
   let decoder = JSONDecoder()
 
@@ -24,11 +25,7 @@ class RestService: NSObject {
   var onUploadCompleted: ((Result<String, ConversionError>) -> Void)?
 
   private var contentLength: Int64 = 1
-  @Published private(set) var taskProgress: Float = 0 {
-    didSet{
-      print("progress: \(taskProgress)")
-    }
-  }
+  @Published private(set) var taskProgress: Float = 0
 
   override init() {
     guard let url = URL(string: "https://pdftoworder.com/api/convert") else {
@@ -38,7 +35,7 @@ class RestService: NSObject {
     uploadURL = url
   }
 
-  func uploadSingleFile(fileURL: URL, toolID: String) {
+  func uploadSingleFile(fileURL: URL, tool: Tool) {
     guard fileURL.startAccessingSecurityScopedResource() else {
       fatalError("Unable to open file")
     }
@@ -50,12 +47,15 @@ class RestService: NSObject {
     let fileInfo = RestManager.FileInfo(
       withFileURL: fileURL,
       filename: fileURL.lastPathComponent,
-      name: "input",
+      // TODO: Some tool can have multiple files.
+      // I will add this shortly. Currenlty using
+      // this so that app can work with all the tools.
+      name: tool.supportMultipleInput ? "input[0]" : "input",
       mimetype: fileURL.mimeType()
     )
 
     restManager.httpBodyParameters.add(value: "k4xeEyhI2QRHlGCGaNl7c3feRDZY690", forKey: "api_key")
-    restManager.httpBodyParameters.add(value: toolID, forKey: "tool_uid")
+    restManager.httpBodyParameters.add(value: tool.toolID, forKey: "tool_uid")
     upload(files: [fileInfo])
   }
 
@@ -71,7 +71,7 @@ class RestService: NSObject {
 
           if let downloadURL = result.downloadURL {
             self.onUploadCompleted?(.success(downloadURL))
-          } else{
+          } else {
             self.onUploadCompleted?(.failure(ConversionError(cause: result.message)))
           }
         } catch let error {
@@ -86,7 +86,7 @@ class RestService: NSObject {
   }
 
   func download(url downloadURL: String) {
-    if let remoteURL = URL(string: downloadURL){
+    if let remoteURL = URL(string: downloadURL) {
       var request = URLRequest(url: remoteURL)
       request.httpMethod = "GET"
 
@@ -101,10 +101,9 @@ class RestService: NSObject {
 extension RestService: URLSessionDownloadDelegate {
   func urlSession(
     _ session: URLSession,
-    downloadTask : URLSessionDownloadTask,
+    downloadTask: URLSessionDownloadTask,
     didFinishDownloadingTo location: URL
   ) {
-    
     if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
       let downloadURL = downloadTask.currentRequest?.url {
       let localURL = documentDirectory.appendingPathComponent("/\(downloadURL.lastPathComponent)")
@@ -115,15 +114,14 @@ extension RestService: URLSessionDownloadDelegate {
       } catch let copyError {
         onDownloadCompleted?(.failure(ConversionError(cause: copyError.localizedDescription)))
       }
-    }
-    else {
+    } else {
       onDownloadCompleted?(.failure(ConversionError(cause: "File Could not be saved")))
     }
   }
 
   func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
     if task is URLSessionDownloadTask,
-      let error = error{
+      let error = error {
       onDownloadCompleted?(.failure(ConversionError(cause: error.localizedDescription)))
     }
   }
@@ -142,7 +140,7 @@ extension RestService: URLSessionDownloadDelegate {
     //calculating with the stored value.
     if downloadProgress < 1.0 {
       taskProgress = downloadProgress
-    } else{
+    } else {
       taskProgress = Float.random(in: 0.8...0.95)
     }
   }

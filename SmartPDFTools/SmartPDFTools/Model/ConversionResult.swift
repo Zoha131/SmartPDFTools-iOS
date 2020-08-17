@@ -9,13 +9,13 @@
 import Foundation
 
 struct ConversionResult: Codable {
-    let message: String
-    let downloadURL: String?
-    let success: Bool
+  let message: String
+  let downloadURL: String?
+  let success: Bool
 
-    enum CodingKeys: String, CodingKey {
-        case message = "msg"
-        case downloadURL = "output-link"
-        case success
-    }
+  enum CodingKeys: String, CodingKey {
+    case message = "msg"
+    case downloadURL = "output-link"
+    case success
+  }
 }

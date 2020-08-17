@@ -12,7 +12,7 @@ class CompleteView: UIView {
   @IBOutlet weak var downloadButton: UIButton!
   @IBOutlet weak var titleLabel: UILabel!
   @IBOutlet weak var image: UIImageView!
-  
+
   var onDownloadAction: (() -> Void)?
 
   override init(frame: CGRect) {

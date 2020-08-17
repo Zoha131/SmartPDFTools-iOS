@@ -59,14 +59,12 @@ class SelectionViewController: UIViewController {
       self.uploadFile()
     }
 
-    progressView.onCancelAction = {
-
-    }
+    progressView.onCancelAction = {}
 
     completeView.onDownloadAction = {
       if self.localDownlaodedURL != nil {
         self.viewPDF()
-      }else{
+      } else {
         self.downloadFile()
       }
     }
@@ -95,7 +93,8 @@ class SelectionViewController: UIViewController {
 
     service.$taskProgress.sink { progress in
       self.progressView.setProgress(progress)
-    }.store(in: &cancellables)
+    }
+    .store(in: &cancellables)
 
     title = tool.title
   }
@@ -153,7 +152,7 @@ extension SelectionViewController {
     progressView.titleView.text = "Uploading"
     progressView.configureViews(withColor: tool.color, animation: "upload_two")
 
-    service.uploadSingleFile(fileURL: fileURL, toolID: tool.toolID)
+    service.uploadSingleFile(fileURL: fileURL, tool: tool)
   }
 
   func downloadFile() {
@@ -164,8 +163,7 @@ extension SelectionViewController {
     moveForward(from: completeView, to: progressView)
     progressView.titleView.text = "Downloading"
     progressView.configureViews(withColor: tool.color, animation: "download_one")
-
-    service.download(url: downloadURL) 
+    service.download(url: downloadURL)
   }
 }
 
@@ -178,7 +176,7 @@ extension SelectionViewController: QLPreviewControllerDataSource {
     _ controller: QLPreviewController,
     previewItemAt index: Int
   ) -> QLPreviewItem {
-    guard let localDownlaodedURL = localDownlaodedURL else{
+    guard let localDownlaodedURL = localDownlaodedURL else {
       fatalError("LocalDownloadURL Can't be null at this position")
     }
 

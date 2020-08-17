@@ -7,9 +7,8 @@
 //
 
 import Foundation
-// swiftlint:disable all
-class RestManager {
 
+class RestManager {
   // MARK: - Properties
 
   var requestHttpHeaders = RestEntity()
@@ -25,71 +24,82 @@ class RestManager {
 
   // MARK: - Public Methods
 
-  func makeRequest(toURL url: URL,
-                   withHttpMethod httpMethod: HttpMethod,
-                   completion: @escaping (_ result: Results) -> Void) {
-
+  func makeRequest(
+    toURL url: URL,
+    withHttpMethod httpMethod: HttpMethod,
+    completion: @escaping (_ result: Results) -> Void
+  ) {
     DispatchQueue.global(qos: .userInitiated).async { [weak self] in
       let targetURL = self?.addURLQueryParameters(toURL: url)
       let httpBody = self?.getHttpBody()
 
-      guard let request = self?.prepareRequest(withURL: targetURL, httpBody: httpBody, httpMethod: httpMethod) else
-      {
+      guard let request = self?.prepareRequest(withURL: targetURL, httpBody: httpBody, httpMethod: httpMethod) else {
         completion(Results(withError: CustomError.failedToCreateRequest))
         return
       }
 
-      let task = self?.session.dataTask(with: request) { (data, response, error) in
-        completion(Results(withData: data,
-                           response: Response(fromURLResponse: response),
-                           error: error))
+      let task = self?.session.dataTask(with: request) { data, response, error in
+        completion(Results(
+          withData: data,
+          response: Response(fromURLResponse: response),
+          error: error))
       }
       task?.resume()
     }
   }
 
-
-
   func getData(fromURL url: URL, completion: @escaping (_ data: Data?) -> Void) {
     DispatchQueue.global(qos: .userInitiated).async {
-      let task = self.session.dataTask(with: url, completionHandler: { (data, response, error) in
+      let task = self.session.dataTask(with: url) { data, _, _ in
         guard let data = data else { completion(nil); return }
         completion(data)
-      })
+      }
       task.resume()
     }
   }
 
-
-
-  func upload(files: [FileInfo], toURL url: URL,
-              withHttpMethod httpMethod: HttpMethod,
-              completion: @escaping(_ result: Results, _ failedFiles: [String]?) -> Void
+  func upload (
+    files: [FileInfo],
+    toURL url: URL,
+    withHttpMethod httpMethod: HttpMethod,
+    completion: @escaping(_ result: Results, _ failedFiles: [String]?) -> Void
   ) {
-
     DispatchQueue.global(qos: .userInitiated).async { [weak self] in
       let targetURL = self?.addURLQueryParameters(toURL: url)
-      guard let boundary = self?.createBoundary() else { completion(Results(withError: CustomError.failedToCreateBoundary), nil); return }
+      guard let boundary = self?.createBoundary() else {
+        completion(Results(withError: CustomError.failedToCreateBoundary), nil)
+        return
+      }
       self?.requestHttpHeaders.add(value: "multipart/form-data; boundary=\(boundary)", forKey: "content-type")
 
-      guard var body = self?.getHttpBody(withBoundary: boundary) else { completion(Results(withError: CustomError.failedToCreateHttpBody), nil); return }
+      guard var body = self?.getHttpBody(withBoundary: boundary) else {
+        completion(Results(withError: CustomError.failedToCreateHttpBody), nil)
+        return
+      }
       let failedFilenames = self?.add(files: files, toBody: &body, withBoundary: boundary)
       self?.close(body: &body, usingBoundary: boundary)
 
-      guard let request = self?.prepareRequest(withURL: targetURL, httpBody: body, httpMethod: httpMethod) else { completion(Results(withError: CustomError.failedToCreateRequest), nil); return }
+      guard let request = self?.prepareRequest(
+        withURL: targetURL,
+        httpBody: body,
+        httpMethod: httpMethod
+        ) else {
+          completion(Results(withError: CustomError.failedToCreateRequest), nil)
+          return
+      }
 
-      let task = self?.session.uploadTask(with: request, from: nil, completionHandler: { (data, response, error) in
-        completion(Results(withData: data,
-                           response: Response(fromURLResponse: response),
-                           error: error),
-                   failedFilenames)
-      })
+      let task = self?.session.uploadTask(
+        with: request,
+        from: nil
+      ) { data, response, error in
+        completion(
+          Results( withData: data, response: Response(fromURLResponse: response), error: error),
+          failedFilenames
+        )
+      }
       task?.resume()
     }
   }
-
-
-
 
   // MARK: - Private Methods
 
@@ -112,22 +122,25 @@ class RestManager {
     return url
   }
 
-
-
   private func getHttpBody() -> Data? {
     guard let contentType = requestHttpHeaders.value(forKey: "Content-Type") else { return nil }
 
     if contentType.contains("application/json") {
-      return try? JSONSerialization.data(withJSONObject: httpBodyParameters.allValues(), options: [.prettyPrinted, .sortedKeys])
+      return try? JSONSerialization.data(
+        withJSONObject: httpBodyParameters.allValues(),
+        options: [.prettyPrinted, .sortedKeys]
+      )
     } else if contentType.contains("application/x-www-form-urlencoded") {
-      let bodyString = httpBodyParameters.allValues().map { "\($0)=\(String(describing: $1.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)))" }.joined(separator: "&")
+      let bodyString = httpBodyParameters.allValues()
+        .map {
+        "\($0)=\(String(describing: $1.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)))"
+        }
+        .joined(separator: "&")
       return bodyString.data(using: .utf8)
     } else {
       return httpBody
     }
   }
-
-
 
   private func prepareRequest(withURL url: URL?, httpBody: Data?, httpMethod: HttpMethod) -> URLRequest? {
     guard let url = url else { return nil }
@@ -155,8 +168,6 @@ extension RestManager {
     case delete
   }
 
-
-
   struct RestEntity {
     private var values: [String: String] = [:]
 
@@ -177,8 +188,6 @@ extension RestManager {
     }
   }
 
-
-
   struct Response {
     var response: URLResponse?
     var httpStatusCode: Int = 0
@@ -197,8 +206,6 @@ extension RestManager {
     }
   }
 
-
-
   struct Results {
     var data: Data?
     var response: Response?
@@ -215,15 +222,12 @@ extension RestManager {
     }
   }
 
-
-
   enum CustomError: Error {
     case failedToCreateRequest
     case failedToCreateBoundary
     case failedToCreateHttpBody
   }
 }
-
 
 // MARK: - Custom Error Description
 extension RestManager.CustomError: LocalizedError {
@@ -235,9 +239,6 @@ extension RestManager.CustomError: LocalizedError {
     }
   }
 }
-
-
-
 
 // MARK: - File Upload Related Implementation
 
@@ -259,23 +260,6 @@ extension RestManager {
 
 
   private func createBoundary() -> String? {
-    // Uncomment the following lines to create a boundary
-    // string using a UUID value. Do not forget to comment out
-    // the second way!
-    /*
-     var uuid = UUID().uuidString
-     uuid = uuid.replacingOccurrences(of: "-", with: "")
-     uuid = uuid.map { $0.lowercased() }.joined()
-
-     let boundary = String(repeating: "-", count: 20) + uuid + "\(Int(Date.timeIntervalSinceReferenceDate))"
-
-     return boundary
-     */
-
-
-    // This is the second way to create a random string to use
-    // with the boundary string. Comment out the following lines
-    // if you want to use the first approach above!
     let lowerCaseLettersInASCII = UInt8(ascii: "a")...UInt8(ascii: "z")
     let upperCaseLettersInASCII = UInt8(ascii: "A")...UInt8(ascii: "Z")
     let digitsInASCII = UInt8(ascii: "0")...UInt8(ascii: "9")
@@ -284,7 +268,11 @@ extension RestManager {
     guard let toString = String(data: Data(sequenceOfRanges), encoding: .utf8) else { return nil }
 
     var randomString = ""
-    for _ in 0..<20 { randomString += String(toString.randomElement()!) }
+    for _ in 0..<20 {
+      // swiftlint:disable force_unwrapping
+      randomString += String(toString.randomElement()!)
+      // swiftlint:enable force_unwrapping
+    }
 
     let boundary = String(repeating: "-", count: 20) + randomString + "\(Int(Date.timeIntervalSinceReferenceDate))"
 
@@ -296,9 +284,11 @@ extension RestManager {
     var body = Data()
 
     for (key, value) in httpBodyParameters.allValues() {
-      let values = ["--\(boundary)\r\n",
+      let values = [
+        "--\(boundary)\r\n",
         "Content-Disposition: form-data; name=\"\(key)\"\r\n\r\n",
-        "\(value)\r\n"]
+        "\(value)\r\n"
+      ]
 
       _ = body.append(values: values)
     }
@@ -312,14 +302,19 @@ extension RestManager {
     var failedFilenames: [String]?
 
     for file in files {
-      guard let filename = file.filename, let content = file.fileContents, let mimetype = file.mimetype, let name = file.name else { continue }
+      guard let filename = file.filename,
+        let content = file.fileContents,
+        let mimetype = file.mimetype,
+        let name = file.name else { continue }
 
       status = false
       var data = Data()
 
-      let formattedFileInfo = ["--\(boundary)\r\n",
+      let formattedFileInfo = [
+        "--\(boundary)\r\n",
         "Content-Disposition: form-data; name=\"\(name)\"; filename=\"\(filename)\"\r\n",
-        "Content-Type: \(mimetype)\r\n\r\n"]
+        "Content-Type: \(mimetype)\r\n\r\n"
+      ]
 
       if data.append(values: formattedFileInfo) {
         if data.append(values: [content]) {
@@ -350,8 +345,6 @@ extension RestManager {
   }
 }
 
-
-
 // MARK: - Data Extension
 extension Data {
   mutating func append<T>(values: [T]) -> Bool {
@@ -360,12 +353,15 @@ extension Data {
 
     if T.self == String.self {
       for value in values {
+        // swiftlint:disable force_cast
         guard let convertedString = (value as! String).data(using: .utf8) else { status = false; break }
         newData.append(convertedString)
       }
     } else if T.self == Data.self {
       for value in values {
+        // swiftlint:disable force_cast
         newData.append(value as! Data)
+        // swiftlint:enable force_cast
       }
     } else {
       status = false
