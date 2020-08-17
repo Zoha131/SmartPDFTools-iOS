@@ -7,18 +7,30 @@
 //
 
 import Foundation
+import Combine
 
-class RestService {
-  private let restManager: RestManager
-  private let session: URLSession
+class RestService: NSObject {
+
+  private lazy var session: URLSession = {
+    URLSession(configuration: .default, delegate: self, delegateQueue: .main)
+  }()
+  private lazy var restManager: RestManager = {
+    RestManager(session: self.session)
+  }()
   private let uploadURL: URL
   let decoder = JSONDecoder()
 
-  init(delegate taskDelegate: URLSessionTaskDelegate) {
-    let sessionConfiguration = URLSessionConfiguration.default
-    session = URLSession(configuration: sessionConfiguration, delegate: taskDelegate, delegateQueue: .main)
-    restManager = RestManager(session: session)
+  var onDownloadCompleted: ((Result<URL, ConversionError>) -> Void)?
+  var onUploadCompleted: ((Result<String, ConversionError>) -> Void)?
 
+  private var contentLength: Int64 = 1
+  @Published private(set) var taskProgress: Float = 0 {
+    didSet{
+      print("progress: \(taskProgress)")
+    }
+  }
+
+  override init() {
     guard let url = URL(string: "https://pdftoworder.com/api/convert") else {
       fatalError("Upload URL is not correct")
     }
@@ -26,7 +38,7 @@ class RestService {
     uploadURL = url
   }
 
-  func uploadSingleFile(fileURL: URL, toolID: String, completion: @escaping(_ result: Result<String, Error>) -> Void) {
+  func uploadSingleFile(fileURL: URL, toolID: String) {
     guard fileURL.startAccessingSecurityScopedResource() else {
       fatalError("Unable to open file")
     }
@@ -44,13 +56,13 @@ class RestService {
 
     restManager.httpBodyParameters.add(value: "k4xeEyhI2QRHlGCGaNl7c3feRDZY690", forKey: "api_key")
     restManager.httpBodyParameters.add(value: toolID, forKey: "tool_uid")
-    upload(files: [fileInfo], completion: completion)
+    upload(files: [fileInfo])
   }
 
-  private func upload(files: [RestManager.FileInfo], completion: @escaping(_ result: Result<String, Error>) -> Void) {
+  private func upload(files: [RestManager.FileInfo]) {
     restManager.upload(files: files, toURL: uploadURL, withHttpMethod: .post) { results, failedFilesList in
       if let error = results.error {
-        completion(.failure(ConversionError(cause: error.localizedDescription)))
+        self.onUploadCompleted?(.failure(ConversionError(cause: error.localizedDescription)))
       }
 
       if let data = results.data {
@@ -58,44 +70,96 @@ class RestService {
           let result = try self.decoder.decode(ConversionResult.self, from: data)
 
           if let downloadURL = result.downloadURL {
-            completion(.success(downloadURL))
+            self.onUploadCompleted?(.success(downloadURL))
           } else{
-            completion(.failure(ConversionError(cause: result.message)))
+            self.onUploadCompleted?(.failure(ConversionError(cause: result.message)))
           }
         } catch let error {
-          completion(.failure(ConversionError(cause: error.localizedDescription)))
+          self.onUploadCompleted?(.failure(ConversionError(cause: error.localizedDescription)))
         }
       }
 
       if failedFilesList != nil {
-        completion(.failure(ConversionError(cause: "File can't be accessed")))
+        self.onUploadCompleted?(.failure(ConversionError(cause: "File can't be accessed")))
       }
     }
   }
 
-  func download(url downloadURL: String, completion: @escaping(_ result: Result<URL, Error>) -> Void) {
-    if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
-      let remoteURL = URL(string: downloadURL) {
-      let localURL = documentDirectory.appendingPathComponent("/\(remoteURL.lastPathComponent)")
+  func download(url downloadURL: String) {
+    if let remoteURL = URL(string: downloadURL){
+      var request = URLRequest(url: remoteURL)
+      request.httpMethod = "GET"
 
-       var request = URLRequest(url: remoteURL)
-        request.httpMethod = "GET"
-
-        let task = session.downloadTask(with: request) { tempLocalURL, _, error in
-          if let tempLocalURL = tempLocalURL, error == nil {
-            do {
-              try FileManager.default.copyItem(at: tempLocalURL, to: localURL)
-              completion(.success(localURL))
-            } catch let copyError {
-              completion(.failure(ConversionError(cause: copyError.localizedDescription)))
-            }
-          } else {
-            completion(.failure(ConversionError(cause: error?.localizedDescription ?? "Temp Local URL Error")))
-          }
-        }
-        task.resume()
+      let task = session.downloadTask(with: request)
+      task.resume()
     } else {
-      completion(.failure(ConversionError(cause: "Could not initiate the request")))
+      onDownloadCompleted?(.failure(ConversionError(cause: "Could not initiate the request")))
     }
+  }
+}
+
+extension RestService: URLSessionDownloadDelegate {
+  func urlSession(
+    _ session: URLSession,
+    downloadTask : URLSessionDownloadTask,
+    didFinishDownloadingTo location: URL
+  ) {
+    
+    if let documentDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask).first,
+      let downloadURL = downloadTask.currentRequest?.url {
+      let localURL = documentDirectory.appendingPathComponent("/\(downloadURL.lastPathComponent)")
+
+      do {
+        try FileManager.default.copyItem(at: location, to: localURL)
+        onDownloadCompleted?(.success(localURL))
+      } catch let copyError {
+        onDownloadCompleted?(.failure(ConversionError(cause: copyError.localizedDescription)))
+      }
+    }
+    else {
+      onDownloadCompleted?(.failure(ConversionError(cause: "File Could not be saved")))
+    }
+  }
+
+  func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+    if task is URLSessionDownloadTask,
+      let error = error{
+      onDownloadCompleted?(.failure(ConversionError(cause: error.localizedDescription)))
+    }
+  }
+
+  func urlSession(
+    _ session: URLSession,
+    downloadTask: URLSessionDownloadTask,
+    didWriteData bytesWritten: Int64,
+    totalBytesWritten: Int64,
+    totalBytesExpectedToWrite: Int64
+  ) {
+    let downloadProgress = Float(totalBytesWritten) / Float(contentLength)
+    //Currently server does not provide "Content-Length" in headers
+    //That's why `totalBytesExpectedToWrite` is alway -1
+    //To show the progress I am storing the upload file size and
+    //calculating with the stored value.
+    if downloadProgress < 1.0 {
+      taskProgress = downloadProgress
+    } else{
+      taskProgress = Float.random(in: 0.8...0.95)
+    }
+  }
+
+  func urlSession (
+    _ session: URLSession,
+    task: URLSessionTask,
+    didSendBodyData bytesSent: Int64,
+    totalBytesSent: Int64,
+    totalBytesExpectedToSend: Int64
+  ) {
+    let uploadProgress = Float(totalBytesSent) / Float(totalBytesExpectedToSend)
+    // Currently Server taking some time to convert the file after uploading
+    // User might get frustrated to wait after seeing 100% complete
+    // That's why for better user satisfaction I am reducing the parcentage
+    let helper = Float.random(in: 0...0.09)
+    taskProgress = uploadProgress - helper
+    contentLength = totalBytesExpectedToSend
   }
 }

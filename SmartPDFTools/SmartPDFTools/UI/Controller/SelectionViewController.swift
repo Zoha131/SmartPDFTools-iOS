@@ -9,6 +9,7 @@
 import UIKit
 import MobileCoreServices
 import QuickLook
+import Combine
 
 class SelectionViewController: UIViewController {
   @IBOutlet weak var chooserCardView: UIView!
@@ -25,10 +26,12 @@ class SelectionViewController: UIViewController {
 
   // swiftlint:disable:next implicitly_unwrapped_optional
   var tool: Tool!
-  lazy var service = { RestService(delegate: self) }()
+  lazy var service = RestService()
   var selectedURLFile: URL?
   var downloadURL: String?
   var localDownlaodedURL: URL?
+
+  var cancellables: Set<AnyCancellable> = []
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -67,6 +70,32 @@ class SelectionViewController: UIViewController {
         self.downloadFile()
       }
     }
+
+    service.onUploadCompleted = { (result: Result<String, ConversionError>) in
+      switch result {
+      case .success(let downloadURL):
+        self.downloadURL = downloadURL
+        self.moveForward(from: self.progressView, to: self.completeView)
+        self.completeView.configureViews(withColor: self.tool.color, title: "Upload Completed", buttonTitle: "Download")
+      case .failure(let error):
+        print(error.localizedDescription)
+      }
+    }
+
+    service.onDownloadCompleted = { (result: Result<URL, ConversionError>) in
+      switch result {
+      case .success( let fileURL):
+        self.localDownlaodedURL = fileURL
+        self.moveForward(from: self.progressView, to: self.completeView)
+        self.completeView.configureViews(withColor: self.tool.color, title: "Download Completed", buttonTitle: "View")
+      case .failure(let error):
+        print(error.localizedDescription)
+      }
+    }
+
+    service.$taskProgress.sink { progress in
+      self.progressView.setProgress(progress)
+    }.store(in: &cancellables)
 
     title = tool.title
   }
@@ -113,19 +142,7 @@ extension SelectionViewController: UIDocumentPickerDelegate {
   }
 }
 
-extension SelectionViewController: URLSessionTaskDelegate {
-  func urlSession (
-    _ session: URLSession,
-    task: URLSessionTask,
-    didSendBodyData bytesSent: Int64,
-    totalBytesSent: Int64,
-    totalBytesExpectedToSend: Int64
-  ) {
-    let uploadProgress = Float(totalBytesSent) / Float(totalBytesExpectedToSend)
-    print("\(uploadProgress)")
-    progressView.setProgress(uploadProgress)
-  }
-
+extension SelectionViewController {
   func uploadFile() {
     guard let fileURL = selectedURLFile else {
       fatalError("Url can't be nil at this stage")
@@ -136,16 +153,7 @@ extension SelectionViewController: URLSessionTaskDelegate {
     progressView.titleView.text = "Uploading"
     progressView.configureViews(withColor: tool.color, animation: "upload_two")
 
-    service.uploadSingleFile(fileURL: fileURL, toolID: tool.toolID) { resul in
-      switch resul {
-      case .success(let downloadURL):
-        self.downloadURL = downloadURL
-        self.moveForward(from: self.progressView, to: self.completeView)
-        self.completeView.configureViews(withColor: self.tool.color, title: "Upload Completed", buttonTitle: "Download")
-      case .failure(let error):
-        print(error.localizedDescription)
-      }
-    }
+    service.uploadSingleFile(fileURL: fileURL, toolID: tool.toolID)
   }
 
   func downloadFile() {
@@ -157,23 +165,13 @@ extension SelectionViewController: URLSessionTaskDelegate {
     progressView.titleView.text = "Downloading"
     progressView.configureViews(withColor: tool.color, animation: "download_one")
 
-    service.download(url: downloadURL) { result in
-      switch result {
-      case .success( let fileURL):
-        self.localDownlaodedURL = fileURL
-        self.moveForward(from: self.progressView, to: self.completeView)
-        self.completeView.configureViews(withColor: self.tool.color, title: "Download Completed", buttonTitle: "View")
-      case .failure(let error):
-        print(error.localizedDescription)
-      }
-    }
+    service.download(url: downloadURL) 
   }
 }
 
 extension SelectionViewController: QLPreviewControllerDataSource {
-
   func numberOfPreviewItems(in controller: QLPreviewController) -> Int {
-    1
+    return 1
   }
 
   func previewController(
