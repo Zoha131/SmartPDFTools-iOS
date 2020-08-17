@@ -15,6 +15,7 @@
 		8921615A24E51AEA000AE622 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8921615924E51AEA000AE622 /* UIView+Extension.swift */; };
 		8921615E24E55FA1000AE622 /* SizeConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8921615D24E55FA1000AE622 /* SizeConstant.swift */; };
 		8921618224E59ED2000AE622 /* SelectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8921618124E59ED2000AE622 /* SelectionViewController.swift */; };
+		8939758C24EAAD7300AC4B82 /* URI+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8939758B24EAAD7300AC4B82 /* URI+Extension.swift */; };
 		89408E0A24E6B1C300CF5E0D /* FileChooserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89408E0924E6B1C300CF5E0D /* FileChooserCell.swift */; };
 		89408E0C24E6C5EC00CF5E0D /* FileChooserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89408E0B24E6C5EC00CF5E0D /* FileChooserData.swift */; };
 		89408E0F24E716D800CF5E0D /* CompositionalLayout+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 89408E0E24E716D800CF5E0D /* CompositionalLayout+Extension.swift */; };
@@ -76,6 +77,7 @@
 		8921615924E51AEA000AE622 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		8921615D24E55FA1000AE622 /* SizeConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SizeConstant.swift; sourceTree = "<group>"; };
 		8921618124E59ED2000AE622 /* SelectionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectionViewController.swift; sourceTree = "<group>"; };
+		8939758B24EAAD7300AC4B82 /* URI+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "URI+Extension.swift"; sourceTree = "<group>"; };
 		89408E0924E6B1C300CF5E0D /* FileChooserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileChooserCell.swift; sourceTree = "<group>"; };
 		89408E0B24E6C5EC00CF5E0D /* FileChooserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FileChooserData.swift; sourceTree = "<group>"; };
 		89408E0E24E716D800CF5E0D /* CompositionalLayout+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompositionalLayout+Extension.swift"; sourceTree = "<group>"; };
@@ -224,6 +226,7 @@
 				8921615D24E55FA1000AE622 /* SizeConstant.swift */,
 				89B3D37D24E7A68D003B8898 /* CAShapeLayer+Extension.swift */,
 				89B3D39124E7FC2F003B8898 /* UIButton+Extension.swift */,
+				8939758B24EAAD7300AC4B82 /* URI+Extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -462,7 +465,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# Type a script or drag a script file from your workspace to insert its path.\nif [ -f ~/com.raywenderlich.swiftlint.yml ]; then\n  if which swiftlint >/dev/null; then\n    swiftlint --config ~/com.raywenderlich.swiftlint.yml\n  fi\nfi\n";
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n# Type a script or drag a script file from your workspace to insert its path.\n#if [ -f ~/com.raywenderlich.swiftlint.yml ]; then\n#  if which swiftlint >/dev/null; then\n#    swiftlint --config ~/com.raywenderlich.swiftlint.yml\n#  fi\n#fi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -484,6 +487,7 @@
 				89B3D39224E7FC2F003B8898 /* UIButton+Extension.swift in Sources */,
 				89408E1424E7969400CF5E0D /* UICollectionView+Extension.swift in Sources */,
 				89B3D39024E7E52E003B8898 /* UploadView.swift in Sources */,
+				8939758C24EAAD7300AC4B82 /* URI+Extension.swift in Sources */,
 				8921615824E4FF8A000AE622 /* MegaToolTitleView.swift in Sources */,
 				8978A60724E42C030006246C /* HomeViewController.swift in Sources */,
 				8921615524E4F683000AE622 /* MegaToolCell.swift in Sources */,

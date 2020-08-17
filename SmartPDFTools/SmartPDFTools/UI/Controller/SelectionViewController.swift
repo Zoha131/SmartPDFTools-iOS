@@ -29,7 +29,7 @@ class SelectionViewController: UIViewController {
   var selectedURLFile: URL?
   var downloadURL: String = "https://pdftoworder.com/download/60X8tCdr0ienj6p20t/47429342-sampletext-txt.pdf"
   var isDownloaded = false
-  var localDownlaodedURL: URL?
+  var localDownlaodedURL: URL!
 
   override func viewDidLoad() {
     super.viewDidLoad()
@@ -44,7 +44,7 @@ class SelectionViewController: UIViewController {
     selectionView.setInside(into: chooserCardView)
 
     selectionView.onDeviceAction = {
-      let importMenu = UIDocumentPickerViewController(documentTypes: [kUTTypeText as String], in: .open)
+      let importMenu = UIDocumentPickerViewController(documentTypes: [self.tool.documentType as String], in: .open)
       importMenu.delegate = self
       importMenu.modalPresentationStyle = .formSheet
       self.present(importMenu, animated: true, completion: nil)
@@ -56,7 +56,7 @@ class SelectionViewController: UIViewController {
 
     uploadView.onUploadAction = {
       self.moveForward(from: self.uploadView, to: self.progressView)
-      self.progressView.configureViews(withColor: .txtTopdf, animation: "upload_two")
+      self.progressView.configureViews(withColor: self.tool.color, animation: "upload_two")
       guard let url = self.selectedURLFile else {
         fatalError("Url can't be nil at this stage")
       }
@@ -74,7 +74,7 @@ class SelectionViewController: UIViewController {
       self.download()
       self.moveForward(from: self.completeView, to: self.progressView)
       self.progressView.titleView.text = "Downloading"
-      self.progressView.configureViews(withColor: .txtTopdf, animation: "download_one")
+      self.progressView.configureViews(withColor: self.tool.color, animation: "download_one")
     }
 
     title = tool.title
@@ -115,7 +115,7 @@ extension SelectionViewController: UIDocumentPickerDelegate {
   func documentPicker(_ controller: UIDocumentPickerViewController, didPickDocumentsAt urls: [URL]) {
     if let url = urls.first {
       moveForward(from: selectionView, to: uploadView)
-      uploadView.configureViews(withColor: .txtTopdf, image: .txtTopdf, fileName: url.lastPathComponent)
+      uploadView.configureViews(withColor: tool.color, image: tool.image, fileName: url.lastPathComponent)
 
       selectedURLFile = url
     }
@@ -146,13 +146,13 @@ extension SelectionViewController: URLSessionTaskDelegate {
 
     let fileInfo = RestManager.FileInfo(
       withFileURL: fileURL,
-      filename: "sampleText.txt",
-      name: "input",
-      mimetype: "text/plain"
+      filename: fileURL.lastPathComponent,
+      name: tool.supportMultipleInput ? "input[0]" : "input",
+      mimetype: fileURL.mimeType()
     )
 
-    rest.httpBodyParameters.add(value: "DzkpCKjktggtCT1ZE8bFqca7anmmkpOcg975", forKey: "api_key")
-    rest.httpBodyParameters.add(value: "PR19", forKey: "tool_uid")
+    rest.httpBodyParameters.add(value: "k4xeEyhI2QRHlGCGaNl7c3feRDZY690", forKey: "api_key")
+    rest.httpBodyParameters.add(value: tool.toolID, forKey: "tool_uid")
     upload(files: [fileInfo], toURL: URL(string: "https://pdftoworder.com/api/convert"))
   }
 
@@ -168,7 +168,7 @@ extension SelectionViewController: URLSessionTaskDelegate {
         if let data = results.data {
           if let toDictionary = try? JSONSerialization.jsonObject(with: data, options: .mutableContainers) {
             self.moveForward(from: self.progressView, to: self.completeView)
-            self.completeView.configureViews(withColor: .txtTopdf)
+            self.completeView.configureViews(withColor: self.tool.color)
             print(toDictionary)
           }
         }
@@ -197,7 +197,7 @@ extension SelectionViewController: URLSessionTaskDelegate {
             do {
               try FileManager.default.copyItem(at: tempLocalURL, to: localURL)
               self.localDownlaodedURL = localURL
-              self.progressView.button.applyButtonShadow(withBackgroundColor: .txtTopdf)
+              self.progressView.button.applyButtonShadow(withBackgroundColor: self.tool.color)
               self.progressView.progressBar.setProgress(1, animated: true)
               self.progressView.progressTxt.text = "Downlaod Completed"
               self.progressView.button.setTitle("View", for: .normal)
@@ -223,7 +223,7 @@ extension SelectionViewController: QLPreviewControllerDataSource {
     _ controller: QLPreviewController,
     previewItemAt index: Int
   ) -> QLPreviewItem {
-    localDownlaodedURL as! NSURL
+    localDownlaodedURL as NSURL
   }
 
   func viewPDF() {

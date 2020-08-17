@@ -318,7 +318,7 @@
                             </mask>
                         </variation>
                     </view>
-                    <navigationItem key="navigationItem" id="AOi-Is-9sj"/>
+                    <navigationItem key="navigationItem" largeTitleDisplayMode="never" id="AOi-Is-9sj"/>
                     <connections>
                         <outlet property="chooserCardView" destination="J9l-QV-04O" id="R5C-XO-lRh"/>
                         <outlet property="collectionView" destination="p72-TY-Jh8" id="cPI-KA-lzM"/>

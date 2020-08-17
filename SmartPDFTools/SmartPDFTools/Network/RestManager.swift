@@ -316,13 +316,13 @@ extension RestManager {
     var failedFilenames: [String]?
 
     for file in files {
-      guard let filename = file.filename, let content = file.fileContents, let mimetype = file.mimetype else { continue }
+      guard let filename = file.filename, let content = file.fileContents, let mimetype = file.mimetype, let name = file.name else { continue }
 
       status = false
       var data = Data()
 
       let formattedFileInfo = ["--\(boundary)\r\n",
-        "Content-Disposition: form-data; name=\"input\"; filename=\"\(filename)\"\r\n",
+        "Content-Disposition: form-data; name=\"\(name)\"; filename=\"\(filename)\"\r\n",
         "Content-Type: \(mimetype)\r\n\r\n"]
 
       if data.append(values: formattedFileInfo) {
